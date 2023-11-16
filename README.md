@@ -20,9 +20,9 @@ You may also see any lint errors in the console.
 
 Open a branch for your changes. You can follow this pattern sugestion:
 
-```git checkout -b my-name/my-feature-name```
+```git checkout -b my-feature-name```
 
-Commit following conventional commits: 
+Please commit following conventional commits: 
 
 https://www.conventionalcommits.org/ 
 
