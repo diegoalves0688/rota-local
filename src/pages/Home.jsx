@@ -1,10 +1,10 @@
-import SimpleContainer from '../components/SimpleContainer'
+import HomeContainer from '../components/HomeContainer'
 
 export default function Home(){
 
     return(
         <div className="container">
-            <SimpleContainer></SimpleContainer>
+            <HomeContainer></HomeContainer>
         </div>
     )
 }

@@ -6,3 +6,25 @@
 .banner {
   width: 100%;
 }
+
+.button-nova-atracao {
+  text-align: right;
+  padding-right: 30px;
+}
+
+.MuiCardActions-root.MuiCardActions-spacing {
+  float: right;
+}
+
+.form-nova-atracao-title {
+  color: #044004;
+  text-align: left;
+  padding-left: 10%;
+  padding-bottom: 15px;
+}
+
+.form-nova-atracao {
+  padding-left: 10%;
+  padding-right: 10%;
+  padding-bottom: 10%;
+}

@@ -16,6 +16,9 @@ export default function Topnavbar(){
                 </button>
                 <div className="collapse navbar-collapse" id="navbarColor04">
                 <ul className="navbar-nav me-auto">
+                <li className="nav-item">
+                    <a className="nav-link active" href="/">Home</a>
+                    </li>
                     <li className="nav-item">
                     <a className="nav-link active" href="#">Praias</a>
                     </li>
@@ -32,7 +35,7 @@ export default function Topnavbar(){
                     <a className="nav-link" href="#">Cachoeiras</a>
                     </li>
                     <li className="nav-item">
-                    <a className="nav-link" href="/login">Boates</a>
+                    <a className="nav-link" href="#">Boates</a>
                     </li>
                 </ul>
                 <form className="d-flex">
