@@ -6,21 +6,13 @@ import CardMedia from '@mui/material/CardMedia';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 
-import banner from '../banner.png';
-
-/**
- *
- * Props:
- * - 
- * - 
- */
 export default function MediaCard(props) {
   return (
     <Card sx={{ maxWidth: 345 }}>
       <CardMedia
         sx={{ height: 140 }}
         image={props.banner}
-        title="green iguana"
+        title="iamgem"
       />
       <CardContent>
         <Typography gutterBottom variant="h5" component="div">

@@ -39,8 +39,6 @@ export default function NovaAtracaoForm() {
                 navigate("/")
             });
         });
-
-        
     }
 
     return (
