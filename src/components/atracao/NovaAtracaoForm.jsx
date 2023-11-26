@@ -2,7 +2,7 @@ import React, {useState} from 'react';
 import { TextField, Button, Stack } from '@mui/material';
 import { Link, useNavigate } from "react-router-dom"
 import axios from 'axios';
- 
+
 export default function NovaAtracaoForm() {
 
     const navigate = useNavigate();
@@ -13,26 +13,36 @@ export default function NovaAtracaoForm() {
     const [estado, setEstado] = useState('')
     const [cidade, setCidade] = useState('')
     const [descricao, setDescricao] = useState('')
-    const [foto, setFoto] = useState('')
+    const [file, setFile] = useState('')
  
     function handleSubmit(event) {
         event.preventDefault();
-        console.log(nome, categoria, pais, estado, cidade, descricao, foto) 
-        axios.post(process.env.REACT_APP_BACKEND_URL+'/api/atracoes', {
-            nome: nome,
-            categoria: categoria,
-            pais: pais,
-            estado: estado,
-            cidade: cidade,
-            descricao: descricao,
-            foto: foto,
-        }).then((response) => {
-            console.log(response);
-            alert("Atração criada com sucesso!")
-            navigate("/")
+        const formData = new FormData();
+        formData.append('file', file);
+    
+        axios.post(process.env.REACT_APP_BACKEND_URL+'/images', formData)
+        .then((response) => {
+            return response.data.imageUrl
+        }).then((imageUrl) => {
+            console.log(nome, categoria, pais, estado, cidade, descricao, imageUrl) 
+            axios.post(process.env.REACT_APP_BACKEND_URL+'/api/atracoes', {
+                nome: nome,
+                categoria: categoria,
+                pais: pais,
+                estado: estado,
+                cidade: cidade,
+                descricao: descricao,
+                foto: imageUrl,
+            }).then((response) => {
+                console.log(response);
+                alert("Atração criada com sucesso!")
+                navigate("/")
+            });
         });
+
+        
     }
- 
+
     return (
         <React.Fragment>
             <h3 className='form-nova-atracao-title'>Cadastro de nova atração</h3>
@@ -93,7 +103,6 @@ export default function NovaAtracaoForm() {
                         required
                     />
                 </Stack>
-
                 <TextField
                         type="text"
                         variant='outlined'
@@ -107,19 +116,13 @@ export default function NovaAtracaoForm() {
                         required
                         sx={{marginBottom: 4}}
                     />
-                
-                <TextField
-                        type="text"
-                        variant='outlined'
-                        color='secondary'
-                        label="Foto"
-                        onChange={e => setFoto(e.target.value)}
-                        value={foto}
-                        fullWidth
-                        required
-                        sx={{marginBottom: 4}}
-                    />
-                
+                <Stack spacing={2} direction="row" sx={{marginBottom: 4}}>
+                    <input 
+                    name="image" 
+                    type="file"
+                    onChange={e => setFile(e.target.files[0])}>
+                    </input>
+                </Stack>
                 <Button variant="outlined" color="secondary" type="submit">Salvar</Button>
             </form>     
         </React.Fragment>
