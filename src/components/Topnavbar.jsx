@@ -1,5 +1,6 @@
 
 import { useNavigate } from "react-router-dom";
+import Button from '@mui/material/Button';
 
 // https://bootswatch.com/flatly/
 export default function Topnavbar(){
@@ -43,8 +44,11 @@ export default function Topnavbar(){
                     <button className="btn btn-secondary my-2 my-sm-0" type="submit">Search</button>
                 </form>
                 </div>
+                
             </div>
             </nav>
+            <div className="button-perfil"><Button variant="outlined" color="secondary" size="small" href="/novo-usuario">Meu perfil</Button></div>
+            <div className="button-nova-atracao"><Button variant="contained" size="small" href="/nova-atracao">Nova Atração</Button></div>
         </div>
     )
 }
