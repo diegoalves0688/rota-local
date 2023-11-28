@@ -2,13 +2,13 @@ import * as React from 'react';
 import CssBaseline from '@mui/material/CssBaseline';
 import Box from '@mui/material/Box';
 import Container from '@mui/material/Container';
-import HomeGrid from './HomeGrid'
 
-import Topnavbar from './Topnavbar'
+import Topnavbar from '../Topnavbar'
 
-import banner from '../banner.png';
+import banner from '../../banner.png';
+import NovoUsuarioForm from './NovoUsuarioForm';
 
-export default function HomeContainer() {
+export default function NovoUsuarioContainer() {
   return (
     <React.Fragment>
       <CssBaseline />
@@ -16,7 +16,7 @@ export default function HomeContainer() {
         <Box sx={{ bgcolor: '#ffffff', height: 'auto', width: 'auto' }}>
           <img src={banner} alt="banner" className='banner'/>
           <Topnavbar></Topnavbar>
-          <HomeGrid></HomeGrid>
+          <NovoUsuarioForm></NovoUsuarioForm>
         </Box>
       </Container>
     </React.Fragment>
