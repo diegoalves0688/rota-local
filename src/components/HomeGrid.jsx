@@ -23,7 +23,7 @@ export default function HomeGrid() {
       <Grid container spacing={2} margin={2}>
         {items.map((item) => (
           <Grid xs={4} key={item.id}>
-            <MediaCard key={item.id} title={item.nome} description={item.descricao}
+            <MediaCard key={item.id} atracaoId={item.id} title={item.nome} description={item.descricao}
               banner={item.foto} categoria={item.categoria} usuarioId={item.usuarioId} location={item.localizacaoId}></MediaCard>
           </Grid>
         ))}

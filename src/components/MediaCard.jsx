@@ -23,7 +23,7 @@ export default function MediaCard(props) {
         </Typography>
       </CardContent>
       <CardActions>
-        <Button className="detail" size="small">Ver detalhes</Button>
+        <Button className="detail" size="small" href={"/atracoes/"+props.atracaoId}>Ver detalhes</Button>
         <Button className="location" size="small">{props.location}</Button>
       </CardActions>
     </Card>
