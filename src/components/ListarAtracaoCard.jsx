@@ -6,7 +6,7 @@ import CardMedia from '@mui/material/CardMedia';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 
-export default function MediaCard(props) {
+export default function ListarAtracaoCard(props) {
   return (
     <Card sx={{ maxWidth: 345 }}>
       <CardMedia
@@ -23,7 +23,7 @@ export default function MediaCard(props) {
         </Typography>
       </CardContent>
       <CardActions>
-        <Button className="detail" size="small">Ver detalhes</Button>
+        <Button className="detail" size="small" href={"/atracoes/"+props.atracaoId}>Ver detalhes</Button>
         <Button className="location" size="small">{props.location}</Button>
       </CardActions>
     </Card>
