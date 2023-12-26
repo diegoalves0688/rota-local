@@ -20,7 +20,7 @@ export default function VisualizarAtracao() {
 
     const params = useParams();
     useEffect( () => {
-        axios.get(process.env.REACT_APP_BACKEND_URL+'/api/atracoes/'+params.atracaoId).then( response => {
+        axios.get(process.env.REACT_APP_BACKEND_URL+'/api/atracao/'+params.atracaoId).then( response => {
             console.log(response.data)
             setNome(response.data.nome)
             setCategoria(response.data.categoria)
@@ -28,7 +28,7 @@ export default function VisualizarAtracao() {
             setEstado(response.data.estado)
             setCidade(response.data.cidade)
             setDescricao(response.data.descricao)
-            setFoto(response.data.foto)
+            setFoto(response.data.imagens[0].urlCaminho)
         }).catch(response => console.log(response))
     }, []);
 

@@ -3,7 +3,7 @@ import { TextField, Button, Stack } from '@mui/material';
 import { Link, useNavigate } from "react-router-dom"
 import axios from 'axios';
 
-export default function NovaAtracaoForm() {
+export default function NovoUsuarioForm() {
 
     const navigate = useNavigate();
 

@@ -4,6 +4,7 @@ import Home from './pages/Home'
 import NovaAtracao from './pages/NovaAtracao'
 import VisualizarAtracao from './pages/VisualizarAtracao'
 import NovoUsuario from './pages/NovoUsuario'
+import VisualizarUsuario from './pages/VisualizarUsuario'
 
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
 
@@ -17,6 +18,7 @@ function App() {
           <Route path="/nova-atracao" element={<NovaAtracao />}></Route>
           <Route path="/atracoes/:atracaoId" element={<VisualizarAtracao />} />
           <Route path="/novo-usuario" element={<NovoUsuario />}></Route>
+          <Route path="/usuarios/:usuarioId" element={<VisualizarUsuario />}></Route>
         </Routes>
       </BrowserRouter>
     </div>
