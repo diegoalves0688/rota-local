@@ -19,25 +19,34 @@ export default function NovaAtracaoForm() {
         event.preventDefault();
         const formData = new FormData();
         formData.append('file', file);
-    
-        axios.post(process.env.REACT_APP_BACKEND_URL+'/images', formData)
-        .then((response) => {
-            return response.data.imageUrl
-        }).then((imageUrl) => {
-            console.log(nome, categoria, pais, estado, cidade, descricao, imageUrl) 
-            axios.post(process.env.REACT_APP_BACKEND_URL+'/api/atracoes', {
-                nome: nome,
-                categoria: categoria,
-                pais: pais,
-                estado: estado,
-                cidade: cidade,
-                descricao: descricao,
-                foto: imageUrl,
-            }).then((response) => {
-                console.log(response);
-                alert("Atração criada com sucesso!")
-                navigate("/")
-            });
+
+        console.log(nome, categoria, pais, estado, cidade, descricao);
+        axios.post(process.env.REACT_APP_BACKEND_URL+'/api/atracao', {
+            nome: nome,
+            categoria: categoria,
+            pais: pais,
+            estado: estado,
+            cidade: cidade,
+            descricao: descricao,
+            usuario: {
+                id: 1
+            },
+            localizacao: {
+                id: 1
+            }
+        }).then((response) => {
+            console.log(response);
+            alert("Atração criada com sucesso!")
+
+            formData.append('usuario', 1);
+            formData.append('atracao', response.data.id);
+            axios.post(process.env.REACT_APP_BACKEND_URL+'/api/imagem', formData)
+            .then((response) => {
+                console.log(response.data)
+                return response.data.imageUrl
+            })
+
+            navigate("/")
         });
     }
 

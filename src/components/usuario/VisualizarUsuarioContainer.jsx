@@ -6,10 +6,10 @@ import Container from '@mui/material/Container';
 import Topnavbar from '../Topnavbar'
 
 import banner from '../../banner.png';
-import VisualizarAtracao from './VisualizarAtracao';
+import VisializarUsuarioForm from './VisualizarUsuarioForm';
 import RecomendacaoLista from '../Recomendacao/RecomendacaoLista';
 
-export default function VisualizarAtracaoContainer() {
+export default function VisualizarUsuarioContainer() {
   return (
     <React.Fragment>
       <CssBaseline />
@@ -17,7 +17,7 @@ export default function VisualizarAtracaoContainer() {
         <Box sx={{ bgcolor: '#ffffff', height: 'auto', width: 'auto' }}>
           <img src={banner} alt="banner" className='banner'/>
           <Topnavbar></Topnavbar>
-          <VisualizarAtracao></VisualizarAtracao>
+          <VisializarUsuarioForm></VisializarUsuarioForm>
           <RecomendacaoLista></RecomendacaoLista>
         </Box>
       </Container>
