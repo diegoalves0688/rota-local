@@ -7,7 +7,8 @@ import Topnavbar from '../Topnavbar'
 
 import banner from '../../banner.png';
 import VisualizarAtracao from './VisualizarAtracao';
-import RecomendacaoLista from '../Recomendacao/RecomendacaoLista';
+import RecomendacaoLista from '../recomendacao/RecomendacaoLista';
+import NovaRecomendacaoForm from '../recomendacao/NovaRecomendacaoForm';
 
 export default function VisualizarAtracaoContainer() {
   return (
@@ -18,6 +19,7 @@ export default function VisualizarAtracaoContainer() {
           <img src={banner} alt="banner" className='banner'/>
           <Topnavbar></Topnavbar>
           <VisualizarAtracao></VisualizarAtracao>
+          <NovaRecomendacaoForm></NovaRecomendacaoForm>
           <RecomendacaoLista></RecomendacaoLista>
         </Box>
       </Container>
