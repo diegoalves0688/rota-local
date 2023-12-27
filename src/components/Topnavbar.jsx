@@ -1,12 +1,8 @@
 
-import { useNavigate } from "react-router-dom";
 import Button from '@mui/material/Button';
 
 // https://bootswatch.com/flatly/
 export default function Topnavbar(){
-
-    const navigate = useNavigate();
-    const loginPage = () => {navigate("/login")}
 
     return (
         <div>
@@ -47,7 +43,10 @@ export default function Topnavbar(){
                 
             </div>
             </nav>
-            <div className="button-perfil"><Button variant="outlined" color="secondary" size="small" href="/novo-usuario">Meu perfil</Button></div>
+            <div className="button-perfil">
+                <Button variant="outlined" color="secondary" size="small" href="/novo-usuario">Novo usuário</Button>
+                <Button variant="outlined" color="secondary" size="small" href="/usuarios/1">Meu perfil</Button>    
+            </div>
             <div className="button-nova-atracao"><Button variant="contained" size="small" href="/nova-atracao">Nova Atração</Button></div>
         </div>
     )

@@ -7,7 +7,7 @@ import Topnavbar from '../Topnavbar'
 
 import banner from '../../banner.png';
 import VisializarUsuarioForm from './VisualizarUsuarioForm';
-import RecomendacaoLista from '../Recomendacao/RecomendacaoLista';
+import RecomendacaoLista from '../recomendacao/RecomendacaoLista';
 
 export default function VisualizarUsuarioContainer() {
   return (
