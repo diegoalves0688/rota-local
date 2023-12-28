@@ -17,23 +17,29 @@ export default function NovoUsuarioForm() {
         event.preventDefault();
         const formData = new FormData();
         formData.append('file', file);
-    
-        axios.post(process.env.REACT_APP_BACKEND_URL+'/images', formData)
-        .then((response) => {
-            return response.data.imageUrl
-        }).then((imageUrl) => {
-            console.log(nome, email, senha, senhaConfirmacao, imageUrl) 
-            axios.post(process.env.REACT_APP_BACKEND_URL+'/api/usuarios', {
-                nome: nome,
-                email: email,
-                senha: senha,
-                foto: imageUrl,
-            }).then((response) => {
-                console.log(response);
-                alert("Usuário criado com sucesso!")
-                navigate("/")
+        
+        if (senha == senhaConfirmacao){
+            axios.post(process.env.REACT_APP_BACKEND_URL+'/api/imagem/usuario', formData)
+            .then((response) => {
+                return response.data.urlCaminho
+            }).then((urlCaminho) => {
+                console.log(nome, email, senha, senhaConfirmacao, urlCaminho) 
+                axios.post(process.env.REACT_APP_BACKEND_URL+'/api/usuario', {
+                    nome: nome,
+                    email: email,
+                    senha: senha,
+                    foto: urlCaminho,
+                    ativo: true,
+                    perfil: "COLABORADOR",
+                }).then((response) => {
+                    console.log(response);
+                    alert("Usuário criado com sucesso!")
+                    navigate("/")
+                });
             });
-        });
+        } else {
+            alert("Senha inválida!")
+        }
     }
 
     return (
