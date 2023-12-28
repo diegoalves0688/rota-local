@@ -1,12 +1,15 @@
 import React, {useState} from 'react';
 import { TextField, Button, Stack } from '@mui/material';
-import { useParams } from "react-router-dom"
+import { useParams, useNavigate } from "react-router-dom"
+import { useCookies } from 'react-cookie'
 import axios from 'axios';
 
 export default function NovaRecomendacaoForm() {
 
+    const navigate = useNavigate();
     const params = useParams();
 
+    const [cookies, setCookie] = useCookies(['user']);
     const [recomendacao, setRecomendacao] = useState('')
     const atracaoId = params.atracaoId;
     const usuarioId = 1;
@@ -14,13 +17,25 @@ export default function NovaRecomendacaoForm() {
     function handleSubmit(event) {
         event.preventDefault();
 
-        axios.post(process.env.REACT_APP_BACKEND_URL+'/api/recomendacao-atracao/usuario/' + usuarioId + '/atracao/' + atracaoId, {
-            recomendacao: recomendacao,
-        }).then((response) => {
-            console.log(response);
-            alert("Recomendação criada com sucesso!")
-            window.location.reload(false);
-        });
+        if (cookies.user != null && cookies.token != null){
+            axios.post(process.env.REACT_APP_BACKEND_URL+'/api/recomendacao-atracao/usuario/' + usuarioId + '/atracao/' + atracaoId, {
+                recomendacao: recomendacao,
+            }, {
+                headers: {
+                    'X-API-KEY': cookies.user,
+                    'X-API-TOKEN': cookies.token,
+                }
+            }).then((response) => {
+                console.log(response);
+                alert("Recomendação criada com sucesso!")
+                window.location.reload(false);
+            });
+        } else {
+            alert("Usuário não logado!")
+            navigate("/login")
+        }
+
+        
     }
 
     return (

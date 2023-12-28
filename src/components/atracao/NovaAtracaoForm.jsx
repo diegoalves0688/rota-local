@@ -1,11 +1,14 @@
 import React, {useState} from 'react';
-import { TextField, Button, Stack } from '@mui/material';
+import { TextField, Button, Stack, Select, Box, FormControl, InputLabel, MenuItem } from '@mui/material';
 import { Link, useNavigate } from "react-router-dom"
+import { useCookies } from 'react-cookie'
 import axios from 'axios';
 
 export default function NovaAtracaoForm() {
 
     const navigate = useNavigate();
+
+    const [cookies, setCookie] = useCookies(['user']);
 
     const [nome, setNome] = useState('')
     const [categoria, setCategoria] = useState('')
@@ -20,34 +23,42 @@ export default function NovaAtracaoForm() {
         const formData = new FormData();
         formData.append('file', file);
 
-        console.log(nome, categoria, pais, estado, cidade, descricao);
-        axios.post(process.env.REACT_APP_BACKEND_URL+'/api/atracao', {
-            nome: nome,
-            categoria: categoria,
-            pais: pais,
-            estado: estado,
-            cidade: cidade,
-            descricao: descricao,
-            usuario: {
-                id: 1
-            },
-            localizacao: {
-                id: 1
-            }
-        }).then((response) => {
-            console.log(response);
-            alert("Atração criada com sucesso!")
-
-            formData.append('usuario', 1);
-            formData.append('atracao', response.data.id);
-            axios.post(process.env.REACT_APP_BACKEND_URL+'/api/imagem', formData)
-            .then((response) => {
-                console.log(response.data)
-                return response.data.imageUrl
-            })
-
-            navigate("/")
-        });
+        if (cookies.user != null && cookies.token != null){
+            axios.post(process.env.REACT_APP_BACKEND_URL+'/api/atracao', {
+                nome: nome,
+                categoria: categoria,
+                pais: pais,
+                estado: estado,
+                cidade: cidade,
+                descricao: descricao,
+                usuario: {
+                    id: 1
+                },
+                localizacao: {
+                    id: 1
+                }
+                },{ headers: {
+                        'X-API-KEY': cookies.user,
+                        'X-API-TOKEN': cookies.token,
+                }}).then((response) => {
+                console.log(response);
+                alert("Atração criada com sucesso!")
+    
+                formData.append('usuario', 1);
+                formData.append('atracao', response.data.id);
+                axios.post(process.env.REACT_APP_BACKEND_URL+'/api/imagem', formData)
+                .then((response) => {
+                    console.log(response.data)
+                    return response.data.imageUrl
+                })
+    
+                navigate("/")
+            });
+        } else {
+            alert("Usuário não logado!")
+            navigate("/login")
+        }
+        
     }
 
     return (
@@ -67,16 +78,31 @@ export default function NovaAtracaoForm() {
                         required
                     />
 
-                    <TextField
-                        type="text"
-                        variant='outlined'
-                        color='secondary'
-                        label="Categoria"
-                        onChange={e => setCategoria(e.target.value)}
-                        value={categoria}
-                        fullWidth
-                        required
-                    />
+                    <Box sx={{ minWidth: 220 }}>
+                        <FormControl fullWidth>
+                            <InputLabel sx={{ paddingLeft: 2 }} variant="standard" htmlFor="uncontrolled-native">
+                                Categoria*
+                            </InputLabel>
+                            <Select
+                                variant='outlined'
+                                color='secondary'
+                                label="Categoria"
+                                onChange={e => setCategoria(e.target.value)}
+                                value={categoria}
+                                fullWidth
+                                required>
+
+                                <MenuItem value={"PRAIAS"}>Praias</MenuItem>
+                                <MenuItem value={"TRILHAS"}>Trilhas</MenuItem>
+                                <MenuItem value={"RESTAURANTES"}>Restaurantes</MenuItem>
+                                <MenuItem value={"MUSEUS"}>Museus</MenuItem>
+                                <MenuItem value={"CACHOEIRAS"}>Cachoeiras</MenuItem>
+                                <MenuItem value={"BOATES"}>Boates</MenuItem>
+                                <MenuItem value={"MONUMENTOS"}>Monumentos</MenuItem>
+                            </Select>
+                        </FormControl>
+                    </Box>
+
                 </Stack>
                 <Stack spacing={2} direction="row" sx={{marginBottom: 4}}>
                     <TextField

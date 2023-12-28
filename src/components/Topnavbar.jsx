@@ -13,26 +13,29 @@ export default function Topnavbar(){
                 </button>
                 <div className="collapse navbar-collapse" id="navbarColor04">
                 <ul className="navbar-nav me-auto">
-                <li className="nav-item">
+                    <li className="nav-item">
                     <a className="nav-link active" href="/">Home</a>
                     </li>
                     <li className="nav-item">
-                    <a className="nav-link active" href="#">Praias</a>
+                    <a className="nav-link active" href="/PRAIAS">Praias</a>
                     </li>
                     <li className="nav-item">
-                    <a className="nav-link" href="#">Trilhas</a>
+                    <a className="nav-link" href="/TRILHAS">Trilhas</a>
                     </li>
                     <li className="nav-item">
-                    <a className="nav-link" href="#">Restaurantes</a>
+                    <a className="nav-link" href="/RESTAURANTES">Restaurantes</a>
                     </li>
                     <li className="nav-item">
-                    <a className="nav-link" href="#">Museus</a>
+                    <a className="nav-link" href="/MUSEUS">Museus</a>
                     </li>
                     <li className="nav-item">
-                    <a className="nav-link" href="#">Cachoeiras</a>
+                    <a className="nav-link" href="/CACHOEIRAS">Cachoeiras</a>
                     </li>
                     <li className="nav-item">
-                    <a className="nav-link" href="#">Boates</a>
+                    <a className="nav-link" href="/BOATES">Boates</a>
+                    </li>
+                    <li className="nav-item">
+                    <a className="nav-link" href="/MONUMENTOS">Monumentos</a>
                     </li>
                 </ul>
                 <form className="d-flex">
@@ -45,6 +48,7 @@ export default function Topnavbar(){
             </nav>
             <div className="button-perfil">
                 <Button variant="outlined" color="secondary" size="small" href="/novo-usuario">Novo usuário</Button>
+                <Button variant="outlined" color="secondary" size="small" href="/login">Login</Button>
                 <Button variant="outlined" color="secondary" size="small" href="/usuarios/1">Meu perfil</Button>    
             </div>
             <div className="button-nova-atracao"><Button variant="contained" size="small" href="/nova-atracao">Nova Atração</Button></div>
