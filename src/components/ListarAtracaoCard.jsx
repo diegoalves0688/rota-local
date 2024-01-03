@@ -7,11 +7,14 @@ import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 
 export default function ListarAtracaoCard(props) {
+
+  let image = props.banner ?? 'http://localhost:8080/images/banner.png'
+
   return (
     <Card sx={{ maxWidth: 345 }}>
       <CardMedia
         sx={{ height: 140 }}
-        image={props.banner}
+        image={image}
         title="iamgem"
       />
       <CardContent>

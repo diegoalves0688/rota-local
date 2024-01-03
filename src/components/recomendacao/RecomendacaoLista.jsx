@@ -8,6 +8,7 @@ import ListItemText from '@mui/material/ListItemText';
 import ListItemAvatar from '@mui/material/ListItemAvatar';
 import Avatar from '@mui/material/Avatar';
 import Typography from '@mui/material/Typography';
+import NovaRecomendacaoForm from '../recomendacao/NovaRecomendacaoForm';
 
 export default function RecomendacaoLista() {
 
@@ -31,6 +32,7 @@ export default function RecomendacaoLista() {
     return (
         <React.Fragment>
             <h3 className='recomendacoes-title'>Recomendações</h3>
+            <NovaRecomendacaoForm></NovaRecomendacaoForm>
             <List className='recomendacao-lista' sx={{ width: '100%', maxWidth: 860, bgcolor: 'background.paper' }}>
                 {recomendacoes.map((recomendacao) => (
                     <React.Fragment key={recomendacao.id}>

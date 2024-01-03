@@ -7,7 +7,7 @@ import axios from 'axios';
 export default function LoginForm() {
 
     const navigate = useNavigate();
-    const [cookies, setCookie] = useCookies(['user']);
+    const [cookies, setCookie, removeCookie] = useCookies(['user']);
     const [email, setEmail] = useState('')
     const [senha, setSenha] = useState('')
  
@@ -19,6 +19,8 @@ export default function LoginForm() {
             senha: senha,
         }).then((response) => {
             console.log(response);
+            removeCookie('user');
+            removeCookie('token');
             setCookie('user', response.data.userId);
             setCookie('token', response.data.token);
             alert("Usuário logado com sucesso!")
