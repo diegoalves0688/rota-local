@@ -1,8 +1,11 @@
 
 import Button from '@mui/material/Button';
+import { useCookies } from 'react-cookie'
 
 // https://bootswatch.com/flatly/
 export default function Topnavbar(){
+
+    const [cookies, setCookie, removeCookie] = useCookies(['user']);
 
     return (
         <div>
@@ -47,9 +50,14 @@ export default function Topnavbar(){
             </div>
             </nav>
             <div className="button-perfil">
+                {cookies.user && 
+                    <Button variant="outlined" color="secondary" size="small" href={"/usuarios/"+cookies.user}>Meu perfil</Button>
+                }
                 <Button variant="outlined" color="secondary" size="small" href="/novo-usuario">Novo usuário</Button>
-                <Button variant="outlined" color="secondary" size="small" href="/login">Login</Button>
-                <Button variant="outlined" color="secondary" size="small" href="/usuarios/1">Meu perfil</Button>    
+                {cookies.user == null && 
+                    <Button variant="outlined" color="secondary" size="small" href="/login">Login</Button>
+                }
+
             </div>
             <div className="button-nova-atracao"><Button variant="contained" size="small" href="/nova-atracao">Nova Atração</Button></div>
         </div>
