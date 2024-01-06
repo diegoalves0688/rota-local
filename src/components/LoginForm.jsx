@@ -30,7 +30,7 @@ export default function LoginForm() {
 
     return (
         <React.Fragment>
-            <h3 className='form-novo-usuario-title'>Login</h3>
+            <h3 className='form-novo-usuario-title'>Efetuar Login</h3>
             <form className='form-novo-usuario' onSubmit={handleSubmit} action={<Link to="/login" />} >
                 
                 <Stack spacing={2} direction="row" sx={{marginBottom: 4}}>
@@ -57,8 +57,8 @@ export default function LoginForm() {
                         required
                     />
                 </Stack>
-                
-                <Button variant="outlined" color="secondary" type="submit">Entrar</Button>
+                <Button className='novo-usuario-button' color="secondary" size="small" href="/novo-usuario">Novo usuário</Button>
+                <Button className='login-entrar-button' variant="contained" type="submit">Entrar</Button>
             </form>     
         </React.Fragment>
     )

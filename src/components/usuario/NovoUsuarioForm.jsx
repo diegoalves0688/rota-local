@@ -99,7 +99,7 @@ export default function NovoUsuarioForm() {
                     onChange={e => setFile(e.target.files[0])}>
                     </input>
                 </Stack>
-                <Button variant="outlined" color="secondary" type="submit">Salvar</Button>
+                <Button className='novo-usuario-form-button' variant="contained" type="submit">Salvar</Button>
             </form>     
         </React.Fragment>
     )
