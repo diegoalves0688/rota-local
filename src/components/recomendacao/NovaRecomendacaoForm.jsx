@@ -12,13 +12,12 @@ export default function NovaRecomendacaoForm() {
     const [cookies, setCookie] = useCookies(['user']);
     const [recomendacao, setRecomendacao] = useState('')
     const atracaoId = params.atracaoId;
-    const usuarioId = 1;
  
     function handleSubmit(event) {
         event.preventDefault();
 
         if (cookies.user != null && cookies.token != null){
-            axios.post(process.env.REACT_APP_BACKEND_URL+'/api/recomendacao-atracao/usuario/' + usuarioId + '/atracao/' + atracaoId, {
+            axios.post(process.env.REACT_APP_BACKEND_URL+'/api/recomendacao-atracao/usuario/' + cookies.user + '/atracao/' + atracaoId, {
                 recomendacao: recomendacao,
             }, {
                 headers: {
@@ -33,9 +32,7 @@ export default function NovaRecomendacaoForm() {
         } else {
             alert("Usuário não logado!")
             navigate("/login")
-        }
-
-        
+        }        
     }
 
     return (
@@ -53,7 +50,7 @@ export default function NovaRecomendacaoForm() {
                         required
                     />
                 </Stack>
-                <Button variant="outlined" color="secondary" type="submit">Salvar Recomendação</Button>
+                <Button className='salvar-recomendacao-button' variant="contained" type="submit">Salvar Recomendação</Button>
             </form>     
         </React.Fragment>
     )

@@ -87,7 +87,7 @@ export default function VisualizarAtracao() {
                         />
                         <CardContent className='visualizar-atracao-conteudo'>
                             <Typography gutterBottom variant="h7" component="div">
-                            <LocationOnIcon></LocationOnIcon>{cidade}, {pais}
+                            <LocationOnIcon></LocationOnIcon>{cidade}, {estado}, {pais}
                             </Typography>
                             <Typography gutterBottom variant="h5" component="div">
                             {nome}

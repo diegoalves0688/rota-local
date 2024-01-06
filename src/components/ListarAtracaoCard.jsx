@@ -22,7 +22,7 @@ export default function ListarAtracaoCard(props) {
           {props.title}
         </Typography>
         <Typography variant="body2" color="text.secondary">
-        {props.description}
+          {props.description.length <= 250 ? props.description : props.description.substring(0, 250) + '...'}
         </Typography>
       </CardContent>
       <CardActions>
