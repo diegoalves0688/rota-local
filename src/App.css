@@ -140,6 +140,7 @@
 .card-location {
   text-align: justify;
   margin-left: 10px;
+  margin-top: 10px;
 }
 
 .MuiTypography-root.card-avatar {
