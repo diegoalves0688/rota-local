@@ -5,6 +5,9 @@ import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
+import ListItemAvatar from '@mui/material/ListItemAvatar';
+import Avatar from '@mui/material/Avatar';
+import LocationOnIcon from '@mui/icons-material/LocationOn';
 
 export default function ListarAtracaoCard(props) {
 
@@ -17,9 +20,14 @@ export default function ListarAtracaoCard(props) {
         image={image}
         title="iamgem"
       />
-      <CardContent>
+      <CardContent className='atracao-card-content'>
         <Typography gutterBottom variant="h5" component="div">
           {props.title}
+        </Typography>
+        <Typography className='card-avatar' gutterBottom variant="body2" component="div">
+          <ListItemAvatar>
+            <div><Avatar alt='foto' src={props.usuariofoto} />{props.usuarionome}</div>
+          </ListItemAvatar>
         </Typography>
         <Typography variant="body2" color="text.secondary">
           {props.description.length <= 250 ? props.description : props.description.substring(0, 250) + '...'}
@@ -27,8 +35,8 @@ export default function ListarAtracaoCard(props) {
       </CardContent>
       <CardActions>
         <Button className="detail" size="small" href={"/atracoes/"+props.atracaoId}>Ver detalhes</Button>
-        <Button className="location" size="small">{props.location}</Button>
       </CardActions>
+      <div className='card-location'><LocationOnIcon></LocationOnIcon>{props.cidade}</div>
     </Card>
   );
 }
