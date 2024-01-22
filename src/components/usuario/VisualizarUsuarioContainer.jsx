@@ -2,6 +2,7 @@ import * as React from 'react';
 import CssBaseline from '@mui/material/CssBaseline';
 import Box from '@mui/material/Box';
 import Container from '@mui/material/Container';
+import Footer from '../Footer';
 
 import Topnavbar from '../Topnavbar'
 
@@ -19,6 +20,7 @@ export default function VisualizarUsuarioContainer() {
           <Topnavbar></Topnavbar>
           <VisializarUsuarioForm></VisializarUsuarioForm>
           <RecomendacaoLista></RecomendacaoLista>
+          <Footer></Footer>
         </Box>
       </Container>
     </React.Fragment>

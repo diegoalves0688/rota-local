@@ -3,9 +3,9 @@ import CssBaseline from '@mui/material/CssBaseline';
 import Box from '@mui/material/Box';
 import Container from '@mui/material/Container';
 import HomeGrid from './HomeGrid'
+import Footer from './Footer';
 
 import Topnavbar from './Topnavbar'
-
 import banner from '../banner.png';
 
 export default function HomeContainer() {
@@ -17,6 +17,7 @@ export default function HomeContainer() {
           <img src={banner} alt="banner" className='banner'/>
           <Topnavbar></Topnavbar>
           <HomeGrid></HomeGrid>
+          <Footer></Footer>
         </Box>
       </Container>
     </React.Fragment>
