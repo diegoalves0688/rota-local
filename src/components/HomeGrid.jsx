@@ -31,7 +31,9 @@ export default function HomeGrid() {
           items.map((item) => (
             <Grid xs={4} key={item.id}>
               <ListarAtracaoCard key={item.id} atracaoId={item.id} title={item.nome} description={item.descricao}
-                banner={item.imagens[0]?.urlCaminho} categoria={item.categoria} usuarioId={item.usuarioId} location={item.localizacaoId}></ListarAtracaoCard>
+                banner={item.imagens[0]?.urlCaminho} categoria={item.categoria} usuarioId={item.usuarioId}
+                cidade={item.localizacao.cidade} estado={item.localizacao.estado}
+                usuariofoto={item.usuario.foto} usuarionome={item.usuario.nome} data={item.dataRegistro}></ListarAtracaoCard>
             </Grid>
           ))
         }
