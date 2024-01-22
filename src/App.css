@@ -132,3 +132,15 @@
 .recomendacao-conteudo {
   color: #074E58 !important;
 }
+
+.footer {
+  background-color: #074E58;
+  height: 90px;
+}
+
+.footer-label {
+  color: white;
+  text-align: justify;
+  margin-left: 40px;
+  padding-top: 40px;
+}
