@@ -5,8 +5,7 @@ import Container from '@mui/material/Container';
 import Footer from '../Footer';
 
 import Topnavbar from '../Topnavbar'
-
-import banner from '../../banner.png';
+import Header from '../Header';
 import NovoUsuarioForm from './NovoUsuarioForm';
 
 export default function NovoUsuarioContainer() {
@@ -15,7 +14,7 @@ export default function NovoUsuarioContainer() {
       <CssBaseline />
       <Container fixed>
         <Box sx={{ bgcolor: '#ffffff', height: 'auto', width: 'auto' }}>
-          <img src={banner} alt="banner" className='banner'/>
+          <Header></Header>
           <Topnavbar></Topnavbar>
           <NovoUsuarioForm></NovoUsuarioForm>
           <Footer></Footer>
