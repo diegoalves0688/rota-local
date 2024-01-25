@@ -17,6 +17,8 @@ import LocationOnIcon from '@mui/icons-material/LocationOn';
 import IconButton from '@mui/material/IconButton';
 import ThumbUpIcon from '@mui/icons-material/ThumbUp';
 import ThumbDownAltIcon from '@mui/icons-material/ThumbDownAlt';
+import DeleteForeverRoundedIcon from '@mui/icons-material/DeleteForeverRounded';
+import BorderColorRoundedIcon from '@mui/icons-material/BorderColorRounded';
 
 export default function VisualizarAtracao() {
     const navigate = useNavigate();
@@ -72,6 +74,20 @@ export default function VisualizarAtracao() {
         handleRate(false);
     }
 
+    function handleDelete() {
+        if (cookies.user != null && cookies.token != null){
+            axios.post(process.env.REACT_APP_BACKEND_URL+'/api/atracao/'+params.atracaoId, { headers: {
+                'X-API-KEY': cookies.user,
+                'X-API-TOKEN': cookies.token,
+            }}).then((response) => {
+                console.log(response);
+                alert("Atração deletada com sucesso!")
+            });
+        } else {
+            alert("Usuário não logado!")
+            navigate("/login")
+        }        
+    }
 
     return (
         <div className='visualizar-atracao-card'>
@@ -89,9 +105,20 @@ export default function VisualizarAtracao() {
                             <Typography gutterBottom variant="h7" component="div">
                             <LocationOnIcon></LocationOnIcon>{cidade}, {estado}, {pais}
                             </Typography>
-                            <Typography gutterBottom variant="h5" component="div">
+                            <Typography className='nome-atracao' gutterBottom variant="h2" component="div">
                             {nome}
+                            <IconButton className='edit-icon-button' aria-label="editar" size='large'>
+                                <div className='edit-icon'>
+                                    <BorderColorRoundedIcon className='editar-atracao-icon'></BorderColorRoundedIcon>
+                                </div>
+                            </IconButton>
+                            <IconButton aria-label="deletar" size='large' onClick={handleDelete}>
+                                <div className='delete-icon'>
+                                    <DeleteForeverRoundedIcon className='deletar-atracao-icon'></DeleteForeverRoundedIcon>
+                                </div>
+                            </IconButton>
                             </Typography>
+                            
                             <Typography variant="body2" color="text.secondary">
                             {descricao}
                             </Typography>
