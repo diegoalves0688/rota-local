@@ -158,3 +158,22 @@
 .MuiTypography-root.card-avatar {
   margin-top: 20px;
 }
+
+.MuiSvgIcon-root.deletar-atracao-icon {
+  font-size: 40px;
+  color: #9B1E4B;
+}
+
+.MuiButtonBase-root.edit-icon-button {
+  margin-left: 40px;
+}
+
+.MuiSvgIcon-root.editar-atracao-icon {
+  font-size: 40px;
+  color: #074E58;
+}
+
+.MuiTypography-root.nome-atracao {
+  color: #074E58;
+  font: bolder;
+}
