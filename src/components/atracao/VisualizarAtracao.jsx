@@ -76,12 +76,13 @@ export default function VisualizarAtracao() {
 
     function handleDelete() {
         if (cookies.user != null && cookies.token != null){
-            axios.post(process.env.REACT_APP_BACKEND_URL+'/api/atracao/'+params.atracaoId, { headers: {
+            axios.delete(process.env.REACT_APP_BACKEND_URL+'/api/atracao/'+params.atracaoId, { headers: {
                 'X-API-KEY': cookies.user,
                 'X-API-TOKEN': cookies.token,
             }}).then((response) => {
                 console.log(response);
                 alert("Atração deletada com sucesso!")
+                navigate("/")
             });
         } else {
             alert("Usuário não logado!")
@@ -105,7 +106,7 @@ export default function VisualizarAtracao() {
                             <Typography gutterBottom variant="h7" component="div">
                             <LocationOnIcon></LocationOnIcon>{cidade}, {estado}, {pais}
                             </Typography>
-                            <Typography className='nome-atracao' gutterBottom variant="h2" component="div">
+                            <Typography className='nome-atracao' gutterBottom variant="h3" component="div">
                             {nome}
                             <IconButton className='edit-icon-button' aria-label="editar" size='large'>
                                 <div className='edit-icon'>
