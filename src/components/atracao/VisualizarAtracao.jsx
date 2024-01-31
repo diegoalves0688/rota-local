@@ -52,7 +52,7 @@ export default function VisualizarAtracao() {
         console.log(rate)
         if (cookies.user != null && cookies.token != null){
             axios.post(process.env.REACT_APP_BACKEND_URL+'/api/avaliacao-atracao/usuario/'+cookies.user+'/atracao/'+params.atracaoId, {
-                avaliacao_positiva: rate,
+                avaliacaoPositiva: rate,
             }, { headers: {
                 'X-API-KEY': cookies.user,
                 'X-API-TOKEN': cookies.token,
