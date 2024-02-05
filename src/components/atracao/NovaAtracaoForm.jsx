@@ -27,15 +27,14 @@ export default function NovaAtracaoForm() {
             axios.post(process.env.REACT_APP_BACKEND_URL+'/api/atracao', {
                 nome: nome,
                 categoria: categoria,
-                pais: pais,
-                estado: estado,
-                cidade: cidade,
                 descricao: descricao,
                 usuario: {
-                    id: 1
+                    id: cookies.user
                 },
                 localizacao: {
-                    id: 1
+                    pais: pais,
+                    estado: estado,
+                    cidade: cidade,
                 }
                 },{ headers: {
                         'X-API-KEY': cookies.user,
