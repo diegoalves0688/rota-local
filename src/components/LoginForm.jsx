@@ -21,8 +21,10 @@ export default function LoginForm() {
             console.log(response);
             removeCookie('user');
             removeCookie('token');
+            removeCookie('perfil');
             setCookie('user', response.data.userId);
             setCookie('token', response.data.token);
+            setCookie('perfil', response.data.perfil);
             alert("Usuário logado com sucesso!")
             navigate("/")
         });
