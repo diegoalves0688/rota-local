@@ -25,26 +25,26 @@ export default function VisualizarAtracao() {
     const [cookies, setCookie] = useCookies(['user']);
 
     const [nome, setNome] = useState('')
-    const [categoria, setCategoria] = useState('')
     const [pais, setPais] = useState('')
     const [estado, setEstado] = useState('')
     const [cidade, setCidade] = useState('')
     const [descricao, setDescricao] = useState('')
     const [ranking, setRanking] = useState('')
     const [foto, setFoto] = useState('')
+    const [usuario, setUsuario] = useState('')
 
     const params = useParams();
     useEffect( () => {
         axios.get(process.env.REACT_APP_BACKEND_URL+'/api/atracao/'+params.atracaoId).then( response => {
             console.log(response.data)
             setNome(response.data.nome)
-            setCategoria(response.data.categoria)
             setPais(response.data.localizacao.pais)
             setEstado(response.data.localizacao.estado)
             setCidade(response.data.localizacao.cidade)
             setDescricao(response.data.descricao)
             setFoto(response.data.imagens[0].urlCaminho)
             setRanking(response.data.atracaoRanking)
+            setUsuario(response.data.usuario.id)
         }).catch(response => console.log(response))
     }, []);
 
@@ -108,16 +108,20 @@ export default function VisualizarAtracao() {
                             </Typography>
                             <Typography className='nome-atracao' gutterBottom variant="h3" component="div">
                             {nome}
-                            <IconButton className='edit-icon-button' aria-label="editar" size='large'>
-                                <div className='edit-icon'>
-                                    <BorderColorRoundedIcon className='editar-atracao-icon'></BorderColorRoundedIcon>
-                                </div>
-                            </IconButton>
-                            <IconButton aria-label="deletar" size='large' onClick={handleDelete}>
-                                <div className='delete-icon'>
-                                    <DeleteForeverRoundedIcon className='deletar-atracao-icon'></DeleteForeverRoundedIcon>
-                                </div>
-                            </IconButton>
+                            {(cookies.perfil == "ADMINISTRADOR" || cookies.user == usuario) &&
+                                <IconButton className='edit-icon-button' aria-label="editar" size='large'>
+                                    <div className='edit-icon'>
+                                        <BorderColorRoundedIcon className='editar-atracao-icon'></BorderColorRoundedIcon>
+                                    </div>
+                                </IconButton>
+                            }
+                            {(cookies.perfil == "ADMINISTRADOR" || cookies.user == usuario) &&
+                                <IconButton aria-label="deletar" size='large' onClick={handleDelete}>
+                                    <div className='delete-icon'>
+                                        <DeleteForeverRoundedIcon className='deletar-atracao-icon'></DeleteForeverRoundedIcon>
+                                    </div>
+                                </IconButton>
+                            }
                             </Typography>
                             
                             <Typography variant="body2" color="text.secondary">
