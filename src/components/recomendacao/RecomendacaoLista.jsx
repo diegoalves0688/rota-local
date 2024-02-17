@@ -10,6 +10,9 @@ import Avatar from '@mui/material/Avatar';
 import NovaRecomendacaoForm from '../recomendacao/NovaRecomendacaoForm';
 import { useCookies } from 'react-cookie'
 
+import DeleteForeverRoundedIcon from '@mui/icons-material/DeleteForeverRounded';
+import BorderColorRoundedIcon from '@mui/icons-material/BorderColorRounded';
+
 import Stack from '@mui/material/Stack';
 import IconButton from '@mui/material/IconButton';
 import ThumbUpIcon from '@mui/icons-material/ThumbUp';
@@ -45,6 +48,22 @@ export default function RecomendacaoLista() {
                 'X-API-TOKEN': cookies.token,
             }}).then((response) => {
                 alert("Avaliação salva com sucesso!")
+            });
+        } else {
+            alert("Usuário não logado!")
+            navigate("/login")
+        }        
+    }
+
+    function handleDeleteRecomendacao() {
+        if (cookies.user != null && cookies.token != null){
+            axios.delete(process.env.REACT_APP_BACKEND_URL+'/api/recomendacao-atracao/'+recomendacaoSelecionada, { headers: {
+                'X-API-KEY': cookies.user,
+                'X-API-TOKEN': cookies.token,
+            }}).then((response) => {
+                console.log(response);
+                alert("Recomendação deletada com sucesso!")
+                navigate("/")
             });
         } else {
             alert("Usuário não logado!")
@@ -107,6 +126,20 @@ export default function RecomendacaoLista() {
                                     <ThumbDownAltIcon className='thumb-recomendacao-avaliacao-icon'></ThumbDownAltIcon>
                                 </div>
                             </IconButton>
+                            {(cookies.perfil == "ADMINISTRADOR" || recomendacao.usuario.id == cookies.user) &&
+                            <IconButton size='large'>
+                                <div className='recomendacao-delete-icon'>
+                                    <DeleteForeverRoundedIcon className='deletar-recomendacao-icon' onClick={handleDeleteRecomendacao}></DeleteForeverRoundedIcon>
+                                </div>
+                            </IconButton>
+                            }
+                            {(cookies.perfil == "ADMINISTRADOR"  || recomendacao.usuario.id == cookies.user) &&
+                            <IconButton aria-label="editar" size='large'>
+                                <div className='recomendacao-edit-icon'>
+                                    <BorderColorRoundedIcon className='editar-recomendacao-icon'></BorderColorRoundedIcon>
+                                </div>
+                            </IconButton>
+                            }
                         </Stack>
                         <Divider variant="inset" component="li" />
                     </React.Fragment>
