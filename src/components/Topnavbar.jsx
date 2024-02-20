@@ -3,11 +3,25 @@ import Button from '@mui/material/Button';
 import { useCookies } from 'react-cookie'
 import Stack from '@mui/material/Stack';
 import Avatar from '@mui/material/Avatar';
+import { Link, useNavigate } from "react-router-dom"
 
 // https://bootswatch.com/flatly/
 export default function Topnavbar(){
 
-    const [cookies, setCookie, removeCookie] = useCookies(['user']);
+    const navigate = useNavigate();
+    const [cookies, setCookie] = useCookies(['user']);
+
+    function logoff() {
+        setCookie('user', 'undefined', {path:'/', domain:'localhost'});
+        setCookie('token', 'undefined', {path:'/', domain:'localhost'});
+        setCookie('perfil', 'undefined', {path:'/', domain:'localhost'});
+        alert("Logoff realizado com sucesso!")
+        window.location.reload();
+    }
+
+    function usuarioLogado(){
+        return cookies.user != null && cookies.user != 'undefined'
+    }
 
     return (
         <div>
@@ -50,10 +64,13 @@ export default function Topnavbar(){
                 </div>
             </nav>
             <div className="button-perfil">
-                {cookies.user && 
+                {usuarioLogado() && 
                     <Button className='meu-perfil-button' color="secondary" size="small" href={"/usuarios/"+cookies.user}>Meu perfil</Button>
                 }
-                {cookies.user == null && 
+                {usuarioLogado() && 
+                    <Button className='logoff-button' color="secondary" size="small" onClick={logoff}>Sair</Button>
+                }
+                {!usuarioLogado() && 
                     <Button className='login-button' color="secondary" size="small" href="/login">Login</Button>
                 }
             </div>
