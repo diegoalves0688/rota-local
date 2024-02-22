@@ -18,13 +18,9 @@ export default function LoginForm() {
             email: email,
             senha: senha,
         }).then((response) => {
-            console.log(response);
-            removeCookie('user');
-            removeCookie('token');
-            removeCookie('perfil');
-            setCookie('user', response.data.userId);
-            setCookie('token', response.data.token);
-            setCookie('perfil', response.data.perfil);
+            setCookie('user', response.data.userId, {path:'/', domain:'localhost'});
+            setCookie('token', response.data.token, {path:'/', domain:'localhost'});
+            setCookie('perfil', response.data.perfil, {path:'/', domain:'localhost'});
             alert("Usuário logado com sucesso!")
             navigate("/")
         });
