@@ -1,6 +1,6 @@
 import { React, useEffect, useState } from 'react';
 import { useParams } from "react-router-dom"
-import { Link, useNavigate } from "react-router-dom"
+import { useNavigate } from "react-router-dom"
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
@@ -22,7 +22,7 @@ import BorderColorRoundedIcon from '@mui/icons-material/BorderColorRounded';
 
 export default function VisualizarAtracao() {
     const navigate = useNavigate();
-    const [cookies, setCookie] = useCookies(['user']);
+    const [cookies] = useCookies(['user']);
 
     const [nome, setNome] = useState('')
     const [pais, setPais] = useState('')
@@ -33,7 +33,11 @@ export default function VisualizarAtracao() {
     const [foto, setFoto] = useState('')
     const [usuario, setUsuario] = useState('')
 
+    const [thumbColor, setThumbColor] = useState('#074E58');
+    const [thumbDisabled, setThumbDisabled] = useState(false);
+
     const params = useParams();
+
     useEffect( () => {
         axios.get(process.env.REACT_APP_BACKEND_URL+'/api/atracao/'+params.atracaoId).then( response => {
             console.log(response.data)
@@ -46,6 +50,14 @@ export default function VisualizarAtracao() {
             setRanking(response.data.atracaoRanking)
             setUsuario(response.data.usuario.id)
         }).catch(response => console.log(response))
+
+        if (cookies.user != null && cookies.token != null){
+            axios.get(process.env.REACT_APP_BACKEND_URL+'/api/avaliacao-atracao/usuario/'+cookies.user+'/atracao/'+params.atracaoId).then( response => {
+                console.log(response.data)
+                setThumbColor('#DCDCDC')
+                setThumbDisabled(true)
+            }).catch(response => console.log(response))
+        }
     }, []);
 
     function handleRate(rate) {
@@ -59,6 +71,7 @@ export default function VisualizarAtracao() {
             }}).then((response) => {
                 console.log(response);
                 alert("Avaliação salva com sucesso!")
+                window.location.reload(false);
             });
         } else {
             alert("Usuário não logado!")
@@ -131,14 +144,14 @@ export default function VisualizarAtracao() {
                     </Card>
                 </Badge>
                 <Stack spacing={1} className='stack-thumb-avaliacao'>
-                    <IconButton aria-label="positivo" size='large' onClick={positiveRate}>
+                    <IconButton disabled={thumbDisabled} color="primary" aria-label="positivo" size='large' onClick={positiveRate}>
                         <div className='thumb-avaliacao'>
-                            <ThumbUpIcon className='thumb-avaliacao-icon'></ThumbUpIcon>
+                            <ThumbUpIcon style={{ 'color': thumbColor}} className='thumb-avaliacao-icon'></ThumbUpIcon>
                         </div>
                     </IconButton>
-                    <IconButton aria-label="negativo" size='large' onClick={negativeRate}>
+                    <IconButton disabled={thumbDisabled} aria-label="negativo" size='large' onClick={negativeRate}>
                         <div className='thumb-avaliacao'>
-                            <ThumbDownAltIcon className='thumb-avaliacao-icon'></ThumbDownAltIcon>
+                            <ThumbDownAltIcon style={{ 'color': thumbColor}} className='thumb-avaliacao-icon'></ThumbDownAltIcon>
                         </div>
                     </IconButton>
                 </Stack>
