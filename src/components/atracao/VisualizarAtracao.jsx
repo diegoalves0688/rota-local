@@ -1,6 +1,6 @@
 import { React, useEffect, useState } from 'react';
 import { useParams } from "react-router-dom"
-import { Link, useNavigate } from "react-router-dom"
+import { useNavigate } from "react-router-dom"
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
@@ -19,11 +19,10 @@ import ThumbUpIcon from '@mui/icons-material/ThumbUp';
 import ThumbDownAltIcon from '@mui/icons-material/ThumbDownAlt';
 import DeleteForeverRoundedIcon from '@mui/icons-material/DeleteForeverRounded';
 import BorderColorRoundedIcon from '@mui/icons-material/BorderColorRounded';
-import { red } from '@mui/material/colors';
 
 export default function VisualizarAtracao() {
     const navigate = useNavigate();
-    const [cookies, setCookie] = useCookies(['user']);
+    const [cookies] = useCookies(['user']);
 
     const [nome, setNome] = useState('')
     const [pais, setPais] = useState('')
