@@ -1,15 +1,39 @@
-import React, {useState} from 'react';
-import { TextField, Button, Stack, Select, Box, FormControl, InputLabel, MenuItem } from '@mui/material';
-import { Link, useNavigate } from "react-router-dom"
-import { useCookies } from 'react-cookie'
-import axios from 'axios';
+import { Box, Button, FormControl, InputLabel, MenuItem, Select, Stack, TextField } from '@mui/material';
+import { React, useEffect, useState } from 'react';
+import { useCookies } from 'react-cookie';
+import { Link, useNavigate, useParams } from "react-router-dom";
 
 export default function EditarAtracaoForm() {
+    const [nome, setNome] = useState('')
+    const [categoria, setCategoria] = useState('')
+    const [pais, setPais] = useState('')
+    const [estado, setEstado] = useState('')
+    const [cidade, setCidade] = useState('')
+    const [descricao, setDescricao] = useState('')
+
+    const navigate = useNavigate();
+
+    const [cookies, setCookie] = useCookies(['user']);
+
+    function handleSubmit(event) {
+        event.preventDefault();}
+        const params = useParams();
+        useEffect( () => {
+            // axios.get(process.env.REACT_APP_BACKEND_URL+'/api/atracao/'+params.atracaoId).then( response => {
+            //     console.log(response.data)
+            //     setNome(response.data.nome)
+            //     setPais(response.data.localizacao.pais)
+            //     setEstado(response.data.localizacao.estado)
+            //     setCidade(response.data.localizacao.cidade)
+            //     setDescricao(response.data.descricao)
+            // }).catch(response => console.log(response))
+        }, []);
+
 
     return (
         <React.Fragment>
             <h3 className='form-editar-atracao-title'>Editar atração</h3>
-            <form className='form-editar-atracao' action={<Link to="/login" />} >
+            <form className='form-editar-atracao' onSubmit={handleSubmit} action={<Link to="/login" />} >
                 
                 <Stack spacing={2} direction="row" sx={{marginBottom: 4}}>
                     <TextField
@@ -17,6 +41,8 @@ export default function EditarAtracaoForm() {
                         variant='outlined'
                         color='secondary'
                         label="Nome da atração"
+                        onChange={e => setNome(e.target.value)}
+                        value={nome}
                         fullWidth
                         required
                     />
@@ -30,6 +56,8 @@ export default function EditarAtracaoForm() {
                                 variant='outlined'
                                 color='secondary'
                                 label="Categoria"
+                                onChange={e => setCategoria(e.target.value)}
+                                value={categoria}
                                 fullWidth
                                 required>
 
@@ -51,6 +79,8 @@ export default function EditarAtracaoForm() {
                         variant='outlined'
                         color='secondary'
                         label="País"
+                        onChange={e => setPais(e.target.value)}
+                        value={pais}
                         fullWidth
                         required
                     />
@@ -59,6 +89,8 @@ export default function EditarAtracaoForm() {
                         variant='outlined'
                         color='secondary'
                         label="Estado"
+                        onChange={e => setEstado(e.target.value)}
+                        value={estado}
                         fullWidth
                         required
                     />
@@ -67,6 +99,8 @@ export default function EditarAtracaoForm() {
                         variant='outlined'
                         color='secondary'
                         label="Cidade"
+                        onChange={e => setCidade(e.target.value)}
+                        value={cidade}
                         fullWidth
                         required
                     />
@@ -76,6 +110,8 @@ export default function EditarAtracaoForm() {
                         variant='outlined'
                         color='secondary'
                         label="Descrição"
+                        onChange={e => setDescricao(e.target.value)}
+                        value={descricao}
                         fullWidth
                         multiline
                         rows={4}
