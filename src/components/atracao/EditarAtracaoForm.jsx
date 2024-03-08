@@ -8,7 +8,7 @@ export default function EditarAtracaoForm() {
 
     const navigate = useNavigate();
 
-    const [cookies, setCookie] = useCookies(['user']);
+    const [cookies] = useCookies(['user']);
 
     const [nome, setNome] = useState('')
     const [categoria, setCategoria] = useState('')
