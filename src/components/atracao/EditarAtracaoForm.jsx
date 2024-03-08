@@ -28,10 +28,32 @@ export default function EditarAtracaoForm() {
         }).catch(response => console.log(response))
     }, []);
 
+    function handleSubmit(event) {
+        event.preventDefault();
+        if (cookies.user != null && cookies.token != null){
+            axios.put(process.env.REACT_APP_BACKEND_URL+'/api/atracao/'+params.atracaoId, {
+                nome: nome,
+                descricao: descricao,
+                categoria: categoria,
+                localizacao: {id: 3} 
+              },{ headers: {
+                        'X-API-KEY': cookies.user,
+                        'X-API-TOKEN': cookies.token,
+                }}).then((response) => {
+                console.log(response);
+                alert("Atração atualizada com sucesso!")
+                navigate("/atracao/"+params.atracaoId)
+            });
+        } else {
+            alert("Usuário não logado!")
+            navigate("/login")
+        }
+    }
+
     return (
         <React.Fragment>
             <h3 className='form-editar-atracao-title'>Editar atração</h3>
-            <form className='form-editar-atracao' action={<Link to="/login" />} >
+            <form className='form-editar-atracao' onSubmit={handleSubmit} action={<Link to="/login" />} >
                 
                 <Stack spacing={2} direction="row" sx={{marginBottom: 4}}>
                     <TextField
