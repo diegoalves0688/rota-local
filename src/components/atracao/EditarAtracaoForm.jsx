@@ -16,6 +16,7 @@ export default function EditarAtracaoForm() {
     const navigate = useNavigate();
     const [cookies, setCookie] = useCookies(['user']);
 
+
     const params = useParams();
     useEffect( () => {
         axios.get(process.env.REACT_APP_BACKEND_URL+'/api/atracao/'+params.atracaoId).then( response => {
@@ -25,8 +26,9 @@ export default function EditarAtracaoForm() {
             setEstado(response.data.localizacao.estado)
             setCidade(response.data.localizacao.cidade)
             setDescricao(response.data.descricao)
+            setCategoria(response.data.categoria)
         }).catch(response => console.log(response))
-    }, []);
+    }, [params.atracaoId]);
 
     function handleSubmit(event) {
         event.preventDefault();
@@ -49,6 +51,8 @@ export default function EditarAtracaoForm() {
             navigate("/login")
         }
     }
+
+
 
     return (
         <React.Fragment>
