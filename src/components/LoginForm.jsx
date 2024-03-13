@@ -21,7 +21,6 @@ export default function LoginForm() {
             setCookie('user', response.data.userId, {path:'/', domain:'localhost'});
             setCookie('token', response.data.token, {path:'/', domain:'localhost'});
             setCookie('perfil', response.data.perfil, {path:'/', domain:'localhost'});
-            alert("Usuário logado com sucesso!")
             navigate("/")
         });
     }

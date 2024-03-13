@@ -5,6 +5,14 @@ import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
 import Typography from '@mui/material/Typography';
+import Divider from '@mui/material/Divider';
+import Box from '@mui/material/Box';
+
+import ListItemText from '@mui/material/ListItemText';
+import ListItemAvatar from '@mui/material/ListItemAvatar';
+import List from '@mui/material/List';
+import ListItem from '@mui/material/ListItem';
+import { Link } from "react-router-dom";
 
 import { useCookies } from 'react-cookie'
 import axios from 'axios';
@@ -20,7 +28,29 @@ import ThumbDownAltIcon from '@mui/icons-material/ThumbDownAlt';
 import DeleteForeverRoundedIcon from '@mui/icons-material/DeleteForeverRounded';
 import BorderColorRoundedIcon from '@mui/icons-material/BorderColorRounded';
 
+import Button from '@mui/material/Button';
+import Dialog from '@mui/material/Dialog';
+import DialogActions from '@mui/material/DialogActions';
+import DialogContent from '@mui/material/DialogContent';
+import DialogContentText from '@mui/material/DialogContentText';
+import DialogTitle from '@mui/material/DialogTitle';
+
+import Avatar from '@mui/material/Avatar';
+
 export default function VisualizarAtracao() {
+
+    const [open, setOpen] = useState(false)
+    const handleLoginDialogOpen = () => {
+        setOpen(true);
+    };
+    const handleLoginDialogClose = () => {
+        setOpen(false);
+    };
+    const handleDialogConfirm = () => {
+        setOpen(false);
+        navigate("/login")
+    };
+
     const navigate = useNavigate();
     const [cookies] = useCookies(['user']);
 
@@ -32,11 +62,18 @@ export default function VisualizarAtracao() {
     const [ranking, setRanking] = useState('')
     const [foto, setFoto] = useState('')
     const [usuario, setUsuario] = useState('')
+    const [usuarioNome, setUsuarioNome] = useState('')
+    const [usuarioFoto, setUsuarioFoto] = useState('')
+    const [dataRegistro, setDataRegistro] = useState('')
 
     const [thumbColor, setThumbColor] = useState('#074E58');
     const [thumbDisabled, setThumbDisabled] = useState(false);
 
     const params = useParams();
+
+    function isLogged(){
+        return cookies.user != "undefined" && cookies.user != null
+    }
 
     useEffect( () => {
         axios.get(process.env.REACT_APP_BACKEND_URL+'/api/atracao/'+params.atracaoId).then( response => {
@@ -49,9 +86,12 @@ export default function VisualizarAtracao() {
             setFoto(response.data.imagens[0].urlCaminho)
             setRanking(response.data.atracaoRanking)
             setUsuario(response.data.usuario.id)
+            setUsuarioNome(response.data.usuario.nome)
+            setUsuarioFoto(response.data.usuario.foto)
+            setDataRegistro(response.data.dataRegistro)
         }).catch(response => console.log(response))
 
-        if (cookies.user != null && cookies.token != null){
+        if (isLogged()){
             axios.get(process.env.REACT_APP_BACKEND_URL+'/api/avaliacao-atracao/usuario/'+cookies.user+'/atracao/'+params.atracaoId).then( response => {
                 console.log(response.data)
                 setThumbColor('#DCDCDC')
@@ -62,7 +102,7 @@ export default function VisualizarAtracao() {
 
     function handleRate(rate) {
         console.log(rate)
-        if (cookies.user != null && cookies.token != null){
+        if (isLogged()){
             axios.post(process.env.REACT_APP_BACKEND_URL+'/api/avaliacao-atracao/usuario/'+cookies.user+'/atracao/'+params.atracaoId, {
                 avaliacaoPositiva: rate,
             }, { headers: {
@@ -74,8 +114,7 @@ export default function VisualizarAtracao() {
                 window.location.reload(false);
             });
         } else {
-            alert("Usuário não logado!")
-            navigate("/login")
+            handleLoginDialogOpen()
         }        
     }
 
@@ -88,7 +127,7 @@ export default function VisualizarAtracao() {
     }
 
     function handleDelete() {
-        if (cookies.user != null && cookies.token != null){
+        if (isLogged()){
             axios.delete(process.env.REACT_APP_BACKEND_URL+'/api/atracao/'+params.atracaoId, { headers: {
                 'X-API-KEY': cookies.user,
                 'X-API-TOKEN': cookies.token,
@@ -98,13 +137,27 @@ export default function VisualizarAtracao() {
                 navigate("/")
             });
         } else {
-            alert("Usuário não logado!")
-            navigate("/login")
+            handleLoginDialogOpen()
         }        
     }
 
     return (
         <div className='visualizar-atracao-card'>
+            <Dialog
+                open={open}
+                onClose={handleLoginDialogClose}
+                aria-describedby="alert-dialog-slide-description" >
+                <DialogTitle>{"Usuário não logado."}</DialogTitle>
+                <DialogContent>
+                <DialogContentText id="alert-dialog-slide-description">
+                    Deseja ser redirecionado para a página de login?
+                </DialogContentText>
+                </DialogContent>
+                <DialogActions>
+                <Button onClick={handleLoginDialogClose}>Desistir</Button>
+                <Button onClick={handleDialogConfirm}>Confirmar</Button>
+                </DialogActions>
+            </Dialog>
             <Stack direction="row" spacing={1}>
                 <Badge className='badge-atracao' badgeContent={'#' + ranking} color="primary">
                     <Card sx={{ maxWidth: 800 }}>
@@ -116,30 +169,44 @@ export default function VisualizarAtracao() {
                             title="imagem"
                         />
                         <CardContent className='visualizar-atracao-conteudo'>
-                            <Typography gutterBottom variant="h7" component="div">
-                            <LocationOnIcon></LocationOnIcon>{cidade}, {estado}, {pais}
-                            </Typography>
-                            <Typography className='nome-atracao' gutterBottom variant="h3" component="div">
-                            {nome}
-                            {(cookies.perfil == "ADMINISTRADOR" || cookies.user == usuario) &&
-                                <IconButton className='edit-icon-button' aria-label="editar" size='large'>
-                                    <div className='edit-icon'>
-                                        <BorderColorRoundedIcon className='editar-atracao-icon'></BorderColorRoundedIcon>
-                                    </div>
-                                </IconButton>
-                            }
-                            {(cookies.perfil == "ADMINISTRADOR" || cookies.user == usuario) &&
-                                <IconButton aria-label="deletar" size='large' onClick={handleDelete}>
-                                    <div className='delete-icon'>
-                                        <DeleteForeverRoundedIcon className='deletar-atracao-icon'></DeleteForeverRoundedIcon>
-                                    </div>
-                                </IconButton>
-                            }
-                            </Typography>
-                            
-                            <Typography variant="body2" color="text.secondary">
-                            {descricao}
-                            </Typography>
+                            <Box sx={{ p: 2 }}>
+                                <Typography gutterBottom variant="h7" component="div">
+                                    <LocationOnIcon></LocationOnIcon>{cidade}, {estado}, {pais}
+                                    </Typography>
+                                    <Typography className='nome-atracao' gutterBottom variant="h3" component="div">
+                                    {nome}
+                                    {(cookies.perfil == "ADMINISTRADOR" || cookies.user == usuario) &&
+                                        <IconButton className='edit-icon-button' aria-label="editar" size='large'>
+                                            <div className='edit-icon'>
+                                                <BorderColorRoundedIcon className='editar-atracao-icon'></BorderColorRoundedIcon>
+                                            </div>
+                                        </IconButton>
+                                    }
+                                    {(cookies.perfil == "ADMINISTRADOR" || cookies.user == usuario) &&
+                                        <IconButton aria-label="deletar" size='large' onClick={handleDelete}>
+                                            <div className='delete-icon'>
+                                                <DeleteForeverRoundedIcon className='deletar-atracao-icon'></DeleteForeverRoundedIcon>
+                                            </div>
+                                        </IconButton>
+                                    }
+                                    </Typography>
+                                    
+                                    <Typography variant="body2" color="text.secondary">
+                                    {descricao}
+                                </Typography>
+                            </Box>
+                            <Divider />
+                            <Box sx={{ p: 2 }}>
+                                <ListItem alignItems="flex-start" component={Link} to={'/usuarios/'+usuario}>
+                                    <ListItemAvatar>
+                                        <Avatar alt={usuarioNome} src={usuarioFoto} />
+                                    </ListItemAvatar>
+                                    <ListItemText className='autor-conteudo'
+                                        primary={usuarioNome}
+                                        secondary={dataRegistro}
+                                    />
+                                </ListItem>
+                            </Box>  
                         </CardContent>
                     </Card>
                 </Badge>

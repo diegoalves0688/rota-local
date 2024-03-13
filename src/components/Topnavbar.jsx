@@ -1,30 +1,96 @@
-
+import { useState, forwardRef } from 'react';
 import Button from '@mui/material/Button';
 import { useCookies } from 'react-cookie'
 import Stack from '@mui/material/Stack';
 import Avatar from '@mui/material/Avatar';
 import { Link, useNavigate } from "react-router-dom"
 
+import Dialog from '@mui/material/Dialog';
+import DialogActions from '@mui/material/DialogActions';
+import DialogContent from '@mui/material/DialogContent';
+import DialogContentText from '@mui/material/DialogContentText';
+import DialogTitle from '@mui/material/DialogTitle';
+
 // https://bootswatch.com/flatly/
 export default function Topnavbar(){
+    const [openLoginDialog, setOpenLoginDialog] = useState(false)
+    const handleLoginDialogOpen = () => {
+        setOpenLoginDialog(true);
+    };
+    const handleLoginDialogClose = () => {
+        setOpenLoginDialog(false);
+    };
+    const handleLoginDialogConfirm = () => {
+        setOpenLoginDialog(false);
+        navigate("/login")
+    };
+
+    const [openLogoffDialog, setOpenLogoffDialog] = useState(false)
+    const handleLogoffDialogOpen = () => {
+        setOpenLogoffDialog(true);
+    };
+    const handleLogoffDialogClose = () => {
+        setOpenLogoffDialog(false);
+    };
+    const handleLogoffDialogConfirm = () => {
+        setOpenLogoffDialog(false);
+        setCookie('user', 'undefined', {path:'/', domain:'localhost'});
+        setCookie('token', 'undefined', {path:'/', domain:'localhost'});
+        setCookie('perfil', 'undefined', {path:'/', domain:'localhost'});
+        navigate("/")
+    };
 
     const navigate = useNavigate();
     const [cookies, setCookie] = useCookies(['user']);
 
     function logoff() {
-        setCookie('user', 'undefined', {path:'/', domain:'localhost'});
-        setCookie('token', 'undefined', {path:'/', domain:'localhost'});
-        setCookie('perfil', 'undefined', {path:'/', domain:'localhost'});
-        alert("Logoff realizado com sucesso!")
-        window.location.reload();
+        handleLogoffDialogOpen()
     }
 
     function usuarioLogado(){
         return cookies.user != null && cookies.user != 'undefined'
     }
 
+    function novaAtracaoHandle(){
+        if (cookies.user != null && cookies.user != 'undefined') {
+            navigate("/nova-atracao")
+        }else{
+            handleLoginDialogOpen()
+        }
+    }
+
     return (
         <div>
+            <Dialog
+                open={openLogoffDialog}
+                onClose={handleLogoffDialogClose}
+                aria-describedby="alert-dialog-slide-description" >
+                <DialogTitle>{"Deseja realmente sair?"}</DialogTitle>
+                <DialogContent>
+                <DialogContentText id="alert-dialog-slide-description">
+                    Ao deslogar do sistema não será possível executar algumas funções como criar atrações ou recomendações.
+                </DialogContentText>
+                </DialogContent>
+                <DialogActions>
+                <Button onClick={handleLogoffDialogClose}>Desistir</Button>
+                <Button onClick={handleLogoffDialogConfirm}>Confirmar</Button>
+                </DialogActions>
+            </Dialog>
+            <Dialog
+                open={openLoginDialog}
+                onClose={handleLoginDialogClose}
+                aria-describedby="alert-dialog-slide-description" >
+                <DialogTitle>{"Usuário não logado."}</DialogTitle>
+                <DialogContent>
+                <DialogContentText id="alert-dialog-slide-description">
+                    Deseja ser redirecionado para a página de login?
+                </DialogContentText>
+                </DialogContent>
+                <DialogActions>
+                <Button onClick={handleLoginDialogClose}>Desistir</Button>
+                <Button onClick={handleLoginDialogConfirm}>Confirmar</Button>
+                </DialogActions>
+            </Dialog>
             <nav className="navbar navbar-expand-lg bg-body-tertiary">
                 <div className="container-fluid">
                     <Stack spacing={1}>
@@ -73,8 +139,8 @@ export default function Topnavbar(){
                 {!usuarioLogado() && 
                     <Button className='login-button' color="secondary" size="small" href="/login">Login</Button>
                 }
+                <Button className='nova-atravao-button' variant="contained" size="small" onClick={novaAtracaoHandle}>Nova Atração</Button>
             </div>
-            <div className="button-nova-atracao"><Button className='nova-atravao-button' variant="contained" size="small" href="/nova-atracao">Nova Atração</Button></div>
         </div>
     )
 }

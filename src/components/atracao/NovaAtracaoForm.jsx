@@ -23,7 +23,7 @@ export default function NovaAtracaoForm() {
         const formData = new FormData();
         formData.append('file', file);
 
-        if (cookies.user != null && cookies.token != null){
+        if (cookies.user != "undefined" && cookies.user != null){
             axios.post(process.env.REACT_APP_BACKEND_URL+'/api/atracao', {
                 nome: nome,
                 categoria: categoria,
