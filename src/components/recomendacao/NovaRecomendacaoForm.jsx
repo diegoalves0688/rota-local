@@ -3,6 +3,7 @@ import { TextField, Button, Stack } from '@mui/material';
 import { useParams, useNavigate } from "react-router-dom"
 import { useCookies } from 'react-cookie'
 import axios from 'axios';
+import Tooltip from '@mui/material/Tooltip';
 
 import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
@@ -74,17 +75,19 @@ export default function NovaRecomendacaoForm() {
                 </DialogActions>
             </Dialog>
             <form className='form-nova-recomendacao' onSubmit={handleSubmit}>
-                <Stack spacing={2} direction="row" sx={{marginBottom: 4}}>
-                    <TextField
-                        type="text"
-                        variant='outlined'
-                        color='secondary'
-                        label="Digite sua recomendação"
-                        onChange={e => setRecomendacao(e.target.value)}
-                        value={recomendacao}
-                        fullWidth
-                        required
-                    />
+                <Stack spacing={2} direction="row" sx={{marginBottom: 4}} title="">
+                    <Tooltip title="Preencha com sua recomendação sobre essa atração">
+                        <TextField
+                            type="text"
+                            variant='outlined'
+                            color='secondary'
+                            label="Digite sua recomendação"
+                            onChange={e => setRecomendacao(e.target.value)}
+                            value={recomendacao}
+                            fullWidth
+                            required
+                        />
+                    </Tooltip>
                 </Stack>
                 <Button className='salvar-recomendacao-button' variant="contained" type="submit">Salvar Recomendação</Button>
             </form>     

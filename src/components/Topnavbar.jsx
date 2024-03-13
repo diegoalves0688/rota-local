@@ -2,8 +2,8 @@ import { useState, forwardRef } from 'react';
 import Button from '@mui/material/Button';
 import { useCookies } from 'react-cookie'
 import Stack from '@mui/material/Stack';
-import Avatar from '@mui/material/Avatar';
-import { Link, useNavigate } from "react-router-dom"
+import { useNavigate } from "react-router-dom"
+import Tooltip from '@mui/material/Tooltip';
 
 import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
@@ -95,7 +95,9 @@ export default function Topnavbar(){
                 <div className="container-fluid">
                     <Stack spacing={1}>
                         <form className="d-flex">
-                            <input className="form-control me-sm-2" type="search" placeholder="Procurar atração"></input>
+                            <Tooltip title="Digite um nome de uma atração para buscar">
+                                <input className="form-control me-sm-2" type="search" placeholder="Procurar atração"></input>
+                            </Tooltip>
                             <button className="btn btn-secondary my-2 my-sm-0 buscar-atracao-button" type="submit">Buscar</button>
                         </form>
                         <div className="collapse navbar-collapse" id="navbarColor04">
