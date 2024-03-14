@@ -16,6 +16,7 @@ function App() {
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<Home />}></Route>
+          <Route path="/busca/:termo" element={<Home />}></Route>
           <Route path="/:categoria" element={<Home />}></Route>
           <Route path="/nova-atracao" element={<NovaAtracao />}></Route>
           <Route path="/atracoes/:atracaoId" element={<VisualizarAtracao />} />

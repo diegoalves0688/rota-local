@@ -1,5 +1,5 @@
-import { useState, forwardRef } from 'react';
 import Button from '@mui/material/Button';
+import React, {useState} from 'react';
 import { useCookies } from 'react-cookie'
 import Stack from '@mui/material/Stack';
 import { useNavigate } from "react-router-dom"
@@ -42,6 +42,7 @@ export default function Topnavbar(){
 
     const navigate = useNavigate();
     const [cookies, setCookie] = useCookies(['user']);
+    const [buscaInput, setBuscaInput] = useState('')
 
     function logoff() {
         handleLogoffDialogOpen()
@@ -49,6 +50,10 @@ export default function Topnavbar(){
 
     function usuarioLogado(){
         return cookies.user != null && cookies.user != 'undefined'
+    }
+
+    function handleBusca(){
+        navigate("/busca/" + buscaInput)
     }
 
     function novaAtracaoHandle(){
@@ -96,9 +101,14 @@ export default function Topnavbar(){
                     <Stack spacing={1}>
                         <form className="d-flex">
                             <Tooltip title="Digite um nome de uma atração para buscar">
-                                <input className="form-control me-sm-2" type="search" placeholder="Procurar atração"></input>
+                                <input 
+                                className="form-control me-sm-2"
+                                type="search"
+                                onChange={e => setBuscaInput(e.target.value)}
+                                value={buscaInput}
+                                placeholder="Procurar atração"></input>
                             </Tooltip>
-                            <button className="btn btn-secondary my-2 my-sm-0 buscar-atracao-button" type="submit">Buscar</button>
+                            <button className="btn btn-secondary my-2 my-sm-0 buscar-atracao-button" type="submit" onClick={handleBusca}>Buscar</button>
                         </form>
                         <div className="collapse navbar-collapse" id="navbarColor04">
                             <ul className="navbar-nav me-auto">
