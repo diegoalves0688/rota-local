@@ -1,22 +1,40 @@
 # Rota Local
 
-Frontend project
+## Visão Geral
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+Projeto Frontend do sistema Rota Local responsável por conter as implementações das telas de interação com os usuários. Esta aplicação funciona em conjunto com o backend [rota-local-api](https://github.com/diegoalves0688/rota-local-api). 
 
-## Available Scripts
+### Exemplo de interação entre as aplicações frontend e backend
 
-In the project directory, you can run:
+![Diagrama projeto](/diagrama-projeto.png)
+
+## Tecnologias utilizadas
+- [Biblioteca React](https://react.dev/)
+
+- [Este projeto foi inicializado usando Create React App](https://github.com/facebook/create-react-app).
+- [Biblioteca de componentes Material UI](https://mui.com/)
+
+## Como rodar localmente
+
+#### Pre requisitos
+- [Node: É necessário ter o Node.js instalado no computador para executar o projeto de frontend.](https://nodejs.org/en)
+
+Na raiz do repositório execute os comandos abaixo:
+
+
+### `npm install`
+
+Esse comando deve ser executado apenas uma única vez, as dependências serão instaladas e não será mais necessário outra execução. 
 
 ### `npm start`
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+A aplicação será inicializada, mas caso uma nova janela do navegador não for aberta, acesse [http://localhost:3000](http://localhost:3000) para visualizar a aplicação.
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+Qualquer alteração no código será automaticamente refletida na página aberta no navegador.
 
-## How to contribute
+<span style="color:red">*Importante: Para o correto funcionamento é necessário que a aplicação backend [rota-local-api](https://github.com/diegoalves0688/rota-local-api) esteja sendo executada no mesmo computador*</span>
+
+## Como contribuir
 
 1º Clone o projeto selecionando o endereço no repositório
 
