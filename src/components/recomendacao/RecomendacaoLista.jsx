@@ -19,7 +19,28 @@ import ThumbUpIcon from '@mui/icons-material/ThumbUp';
 import ThumbDownAltIcon from '@mui/icons-material/ThumbDownAlt';
 import Typography from '@mui/material/Typography';
 
+import Button from '@mui/material/Button';
+import Dialog from '@mui/material/Dialog';
+import DialogActions from '@mui/material/DialogActions';
+import DialogContent from '@mui/material/DialogContent';
+import DialogContentText from '@mui/material/DialogContentText';
+import DialogTitle from '@mui/material/DialogTitle';
+
+import { Link } from "react-router-dom";
+
 export default function RecomendacaoLista() {
+    const [open, setOpen] = useState(false)
+    const handleLoginDialogOpen = () => {
+        setOpen(true);
+    };
+    const handleLoginDialogClose = () => {
+        setOpen(false);
+    };
+    const handleDialogConfirm = () => {
+        setOpen(false);
+        navigate("/login")
+    };
+
     const [recomendacoes, setRecomentacoes] = useState([])
     const navigate = useNavigate();
     const [cookies, setCookie] = useCookies(['user']);
@@ -39,8 +60,12 @@ export default function RecomendacaoLista() {
         }
     }, []);
 
+    function isLogged(){
+        return cookies.user != "undefined" && cookies.user != null
+    }
+
     function handleRecomendationRate(rate, id) {
-        if (cookies.user != null && cookies.token != null){
+        if (isLogged()){
             axios.post(process.env.REACT_APP_BACKEND_URL+'/api/avaliacao-recomendacao/usuario/'+cookies.user+'/recomendacao/'+id, {
                 avaliacao_positiva: rate,
             }, { headers: {
@@ -50,13 +75,12 @@ export default function RecomendacaoLista() {
                 alert("Avaliação salva com sucesso!")
             });
         } else {
-            alert("Usuário não logado!")
-            navigate("/login")
+            handleLoginDialogOpen()
         }        
     }
 
     function handleDeleteRecomendacao() {
-        if (cookies.user != null && cookies.token != null){
+        if (isLogged()){
             axios.delete(process.env.REACT_APP_BACKEND_URL+'/api/recomendacao-atracao/'+recomendacaoSelecionada, { headers: {
                 'X-API-KEY': cookies.user,
                 'X-API-TOKEN': cookies.token,
@@ -66,13 +90,27 @@ export default function RecomendacaoLista() {
                 navigate("/")
             });
         } else {
-            alert("Usuário não logado!")
-            navigate("/login")
+            handleLoginDialogOpen()
         }        
     }
   
     return (
         <React.Fragment>
+            <Dialog
+                open={open}
+                onClose={handleLoginDialogClose}
+                aria-describedby="alert-dialog-slide-description" >
+                <DialogTitle>{"Usuário não logado."}</DialogTitle>
+                <DialogContent>
+                <DialogContentText id="alert-dialog-slide-description">
+                    Deseja ser redirecionado para a página de login?
+                </DialogContentText>
+                </DialogContent>
+                <DialogActions>
+                <Button onClick={handleLoginDialogClose}>Desistir</Button>
+                <Button onClick={handleDialogConfirm}>Confirmar</Button>
+                </DialogActions>
+            </Dialog>
             <h3 className='recomendacoes-title'>Recomendações</h3>
             {!window.location.pathname.includes('usuarios') && 
                 <NovaRecomendacaoForm></NovaRecomendacaoForm>
@@ -83,7 +121,7 @@ export default function RecomendacaoLista() {
                     <React.Fragment key={recomendacao.id}>
                         
                         <Stack direction="row" className='stack-thumb-recomendacao-avaliacao'>
-                            <ListItem alignItems="flex-start">
+                            <ListItem alignItems="flex-start" component={Link} to={'/usuarios/'+recomendacao.usuario.id}>
                                 <ListItemAvatar>
                                 <Avatar alt={recomendacao.usuario.nome} src={recomendacao.usuario.foto} />
                                 </ListItemAvatar>
