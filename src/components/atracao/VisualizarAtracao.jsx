@@ -141,6 +141,10 @@ export default function VisualizarAtracao() {
         }        
     }
 
+    function editar(){
+        navigate("/editar-atracao/"+params.atracaoId)
+    }
+
     return (
         <div className='visualizar-atracao-card'>
             <Dialog
@@ -176,7 +180,7 @@ export default function VisualizarAtracao() {
                                     <Typography className='nome-atracao' gutterBottom variant="h3" component="div">
                                     {nome}
                                     {(cookies.perfil == "ADMINISTRADOR" || cookies.user == usuario) &&
-                                        <IconButton className='edit-icon-button' aria-label="editar" size='large'>
+                                        <IconButton className='edit-icon-button' aria-label="editar" size='large' onClick={editar}>
                                             <div className='edit-icon'>
                                                 <BorderColorRoundedIcon className='editar-atracao-icon'></BorderColorRoundedIcon>
                                             </div>
