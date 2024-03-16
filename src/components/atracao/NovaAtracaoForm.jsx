@@ -3,6 +3,7 @@ import { TextField, Button, Stack, Select, Box, FormControl, InputLabel, MenuIte
 import { Link, useNavigate } from "react-router-dom"
 import { useCookies } from 'react-cookie'
 import axios from 'axios';
+import Tooltip from '@mui/material/Tooltip';
 
 export default function NovaAtracaoForm() {
 
@@ -23,7 +24,7 @@ export default function NovaAtracaoForm() {
         const formData = new FormData();
         formData.append('file', file);
 
-        if (cookies.user != null && cookies.token != null){
+        if (cookies.user != "undefined" && cookies.user != null){
             axios.post(process.env.REACT_APP_BACKEND_URL+'/api/atracao', {
                 nome: nome,
                 categoria: categoria,
@@ -64,79 +65,93 @@ export default function NovaAtracaoForm() {
         <React.Fragment>
             <h3 className='form-nova-atracao-title'>Cadastro de nova atração</h3>
             <form className='form-nova-atracao' onSubmit={handleSubmit} action={<Link to="/login" />} >
-                
-                <Stack spacing={2} direction="row" sx={{marginBottom: 4}}>
-                    <TextField
-                        type="text"
-                        variant='outlined'
-                        color='secondary'
-                        label="Nome da atração"
-                        onChange={e => setNome(e.target.value)}
-                        value={nome}
-                        fullWidth
-                        required
-                    />
-
+                <Stack spacing={2} direction="row" sx={{marginBottom: 4}} title="">
+                    <Tooltip title="Preencha esse campo com o nome da atração que você deseja criar">
+                        <TextField
+                            type="text"
+                            variant='outlined'
+                            color='secondary'
+                            label="Nome da atração"
+                            onChange={e => setNome(e.target.value)}
+                            value={nome}
+                            fullWidth
+                            required
+                        />
+                    </Tooltip>
                     <Box sx={{ minWidth: 220 }}>
-                        <FormControl fullWidth>
-                            <InputLabel sx={{ paddingLeft: 2 }} variant="standard" htmlFor="uncontrolled-native">
-                                Categoria*
-                            </InputLabel>
-                            <Select
-                                variant='outlined'
-                                color='secondary'
-                                label="Categoria"
-                                onChange={e => setCategoria(e.target.value)}
-                                value={categoria}
-                                fullWidth
-                                required>
+                        <Tooltip 
+                            title="Selecione uma categoria para a atração que você deseja criar">
+                            <FormControl fullWidth>
+                                <InputLabel sx={{ paddingLeft: 2 }} variant="standard" htmlFor="uncontrolled-native">
+                                    Categoria*
+                                </InputLabel>
+                                <Select
+                                    variant='outlined'
+                                    color='secondary'
+                                    label="Categoria"
+                                    onChange={e => setCategoria(e.target.value)}
+                                    value={categoria}
+                                    fullWidth
+                                    title=''
+                                    required>
 
-                                <MenuItem value={"PRAIAS"}>Praias</MenuItem>
-                                <MenuItem value={"TRILHAS"}>Trilhas</MenuItem>
-                                <MenuItem value={"RESTAURANTES"}>Restaurantes</MenuItem>
-                                <MenuItem value={"MUSEUS"}>Museus</MenuItem>
-                                <MenuItem value={"CACHOEIRAS"}>Cachoeiras</MenuItem>
-                                <MenuItem value={"BOATES"}>Boates</MenuItem>
-                                <MenuItem value={"MONUMENTOS"}>Monumentos</MenuItem>
-                            </Select>
-                        </FormControl>
+                                    <MenuItem value={"PRAIAS"}>Praias</MenuItem>
+                                    <MenuItem value={"TRILHAS"}>Trilhas</MenuItem>
+                                    <MenuItem value={"RESTAURANTES"}>Restaurantes</MenuItem>
+                                    <MenuItem value={"MUSEUS"}>Museus</MenuItem>
+                                    <MenuItem value={"CACHOEIRAS"}>Cachoeiras</MenuItem>
+                                    <MenuItem value={"BOATES"}>Boates</MenuItem>
+                                    <MenuItem value={"MONUMENTOS"}>Monumentos</MenuItem>
+                                </Select>
+                            </FormControl>
+                        </Tooltip>
                     </Box>
-
                 </Stack>
-                <Stack spacing={2} direction="row" sx={{marginBottom: 4}}>
-                    <TextField
-                        type="text"
-                        variant='outlined'
-                        color='secondary'
-                        label="País"
-                        onChange={e => setPais(e.target.value)}
-                        value={pais}
-                        fullWidth
-                        required
-                    />
-                    <TextField
-                        type="text"
-                        variant='outlined'
-                        color='secondary'
-                        label="Estado"
-                        onChange={e => setEstado(e.target.value)}
-                        value={estado}
-                        fullWidth
-                        required
-                    />
-                    <TextField
-                        type="text"
-                        variant='outlined'
-                        color='secondary'
-                        label="Cidade"
-                        onChange={e => setCidade(e.target.value)}
-                        value={cidade}
-                        fullWidth
-                        required
-                    />
+                <Stack spacing={2} direction="row" sx={{marginBottom: 4}} title="">
+                    <Tooltip title="Preencha esse campo com o nome do país da atração que você deseja criar">
+                        <TextField
+                            type="text"
+                            title=''
+                            variant='outlined'
+                            color='secondary'
+                            label="País"
+                            onChange={e => setPais(e.target.value)}
+                            value={pais}
+                            fullWidth
+                            required
+                        />
+                    </Tooltip>
+                    <Tooltip title="Preencha esse campo com o nome do estado da atração que você deseja criar">
+                        <TextField
+                            type="text"
+                            title=''
+                            variant='outlined'
+                            color='secondary'
+                            label="Estado"
+                            onChange={e => setEstado(e.target.value)}
+                            value={estado}
+                            fullWidth
+                            required
+                        />
+                    </Tooltip>
+                    <Tooltip title="Preencha esse campo com o nome da cidade da atração que você deseja criar">
+                        <TextField
+                            type="text"
+                            title=''
+                            variant='outlined'
+                            color='secondary'
+                            label="Cidade"
+                            onChange={e => setCidade(e.target.value)}
+                            value={cidade}
+                            fullWidth
+                            required
+                        />
+                    </Tooltip>
                 </Stack>
-                <TextField
+                <Tooltip title="Preencha esse campo com a descrição da atração que você deseja criar">
+                    <TextField
                         type="text"
+                        title=''
                         variant='outlined'
                         color='secondary'
                         label="Descrição"
@@ -148,12 +163,16 @@ export default function NovaAtracaoForm() {
                         required
                         sx={{marginBottom: 4}}
                     />
-                <Stack spacing={2} direction="row" sx={{marginBottom: 4}}>
-                    <input 
-                    name="image" 
-                    type="file"
-                    onChange={e => setFile(e.target.files[0])}>
-                    </input>
+                </Tooltip>
+                <Stack spacing={2} direction="row" sx={{marginBottom: 4}} title="">
+                    <Tooltip title="Selecione uma imagem para a atração que você deseja criar">
+                        <input 
+                            title=''
+                            name="image" 
+                            type="file"
+                            onChange={e => setFile(e.target.files[0])}>
+                        </input>
+                    </Tooltip>
                 </Stack>
                 <Button variant="outlined" color="secondary" type="submit">Salvar</Button>
             </form>     
