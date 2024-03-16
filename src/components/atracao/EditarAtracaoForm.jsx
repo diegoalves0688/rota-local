@@ -37,14 +37,14 @@ export default function EditarAtracaoForm() {
                 nome: nome,
                 descricao: descricao,
                 categoria: categoria,
-                localizacao: {id: 3} 
+                localizacao: {pais:pais, estado:estado, cidade:cidade} 
               },{ headers: {
                         'X-API-KEY': cookies.user,
                         'X-API-TOKEN': cookies.token,
                 }}).then((response) => {
                 console.log(response);
                 alert("Atração atualizada com sucesso!")
-                navigate("/atracao/"+params.atracaoId)
+                navigate("/")
             });
         } else {
             alert("Usuário não logado!")

@@ -30,7 +30,20 @@
   padding-bottom: 15px;
 }
 
+.form-editar-atracao-title {
+  color: #074E58;
+  text-align: left;
+  padding-left: 10%;
+  padding-bottom: 15px;
+}
+
 .form-nova-atracao {
+  padding-left: 10%;
+  padding-right: 10%;
+  padding-bottom: 10%;
+}
+
+.form-editar-atracao {
   padding-left: 10%;
   padding-right: 10%;
   padding-bottom: 10%;
