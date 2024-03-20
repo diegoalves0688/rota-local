@@ -5,6 +5,12 @@ import { Link, useNavigate } from "react-router-dom"
 import { useCookies } from 'react-cookie'
 import axios from 'axios';
 
+import Dialog from '@mui/material/Dialog';
+import DialogActions from '@mui/material/DialogActions';
+import DialogContent from '@mui/material/DialogContent';
+import DialogContentText from '@mui/material/DialogContentText';
+import DialogTitle from '@mui/material/DialogTitle';
+
 export default function EditarAtracaoForm() {
     const [nome, setNome] = useState('')
     const [categoria, setCategoria] = useState('')
@@ -42,9 +48,7 @@ export default function EditarAtracaoForm() {
                         'X-API-KEY': cookies.user,
                         'X-API-TOKEN': cookies.token,
                 }}).then((response) => {
-                console.log(response);
-                alert("Atração atualizada com sucesso!")
-                navigate("/")
+                handleUpdateDialogOpen()
             });
         } else {
             alert("Usuário não logado!")
@@ -52,10 +56,31 @@ export default function EditarAtracaoForm() {
         }
     }
 
-
+    const [updateDialogOpen, setUpdateDialogOpen] = useState(false)
+    const handleUpdateDialogOpen = () => {
+        setUpdateDialogOpen(true);
+    };
+    const handleUpdateDialogClose = () => {
+        setUpdateDialogOpen(false);
+        navigate("/")
+    };
 
     return (
         <React.Fragment>
+            <Dialog
+                open={updateDialogOpen}
+                onClose={handleUpdateDialogClose}
+                aria-describedby="alert-dialog-slide-description" >
+                <DialogTitle>{"Feito!"}</DialogTitle>
+                <DialogContent>
+                <DialogContentText id="alert-dialog-slide-description">
+                    Sua atração foi alterada com sucesso!
+                </DialogContentText>
+                </DialogContent>
+                <DialogActions>
+                <Button onClick={handleUpdateDialogClose}>Fechar</Button>
+                </DialogActions>
+            </Dialog>
             <h3 className='form-editar-atracao-title'>Editar atração</h3>
             <form className='form-editar-atracao' onSubmit={handleSubmit} action={<Link to="/login" />} >
                 

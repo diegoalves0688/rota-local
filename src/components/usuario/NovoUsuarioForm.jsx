@@ -4,6 +4,12 @@ import { Link, useNavigate } from "react-router-dom"
 import axios from 'axios';
 import Tooltip from '@mui/material/Tooltip';
 
+import Dialog from '@mui/material/Dialog';
+import DialogActions from '@mui/material/DialogActions';
+import DialogContent from '@mui/material/DialogContent';
+import DialogContentText from '@mui/material/DialogContentText';
+import DialogTitle from '@mui/material/DialogTitle';
+
 export default function NovoUsuarioForm() {
 
     const navigate = useNavigate();
@@ -33,9 +39,7 @@ export default function NovoUsuarioForm() {
                     ativo: true,
                     perfil: "COLABORADOR",
                 }).then((response) => {
-                    console.log(response);
-                    alert("Usuário criado com sucesso!")
-                    navigate("/")
+                    handleDialogOpen()
                 });
             });
         } else {
@@ -43,8 +47,31 @@ export default function NovoUsuarioForm() {
         }
     }
 
+    const [dialogOpen, setDialogOpen] = useState(false)
+    const handleDialogOpen = () => {
+        setDialogOpen(true);
+    };
+    const handleDialogClose = () => {
+        setDialogOpen(false);
+        navigate("/login")
+    };
+
     return (
         <React.Fragment>
+            <Dialog
+                open={dialogOpen}
+                onClose={handleDialogClose}
+                aria-describedby="alert-dialog-slide-description" >
+                <DialogTitle>{"Sucesso!"}</DialogTitle>
+                <DialogContent>
+                <DialogContentText id="alert-dialog-slide-description">
+                    Usuário cadastrado! Faça o login para utilizar o sistema.
+                </DialogContentText>
+                </DialogContent>
+                <DialogActions>
+                <Button onClick={handleDialogClose}>Fechar</Button>
+                </DialogActions>
+            </Dialog>
             <h3 className='form-novo-usuario-title'>Cadastro de novo usuário</h3>
             <form className='form-novo-usuario' onSubmit={handleSubmit} action={<Link to="/login" />} >
                 <Stack spacing={2} direction="row" sx={{marginBottom: 4}} title="">

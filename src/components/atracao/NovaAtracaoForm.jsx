@@ -5,6 +5,12 @@ import { useCookies } from 'react-cookie'
 import axios from 'axios';
 import Tooltip from '@mui/material/Tooltip';
 
+import Dialog from '@mui/material/Dialog';
+import DialogActions from '@mui/material/DialogActions';
+import DialogContent from '@mui/material/DialogContent';
+import DialogContentText from '@mui/material/DialogContentText';
+import DialogTitle from '@mui/material/DialogTitle';
+
 export default function NovaAtracaoForm() {
 
     const navigate = useNavigate();
@@ -41,18 +47,13 @@ export default function NovaAtracaoForm() {
                         'X-API-KEY': cookies.user,
                         'X-API-TOKEN': cookies.token,
                 }}).then((response) => {
-                console.log(response);
-                alert("Atração criada com sucesso!")
-    
                 formData.append('usuario', 1);
                 formData.append('atracao', response.data.id);
                 axios.post(process.env.REACT_APP_BACKEND_URL+'/api/imagem', formData)
                 .then((response) => {
-                    console.log(response.data)
+                    handleDialogOpen();
                     return response.data.imageUrl
                 })
-    
-                navigate("/")
             });
         } else {
             alert("Usuário não logado!")
@@ -61,8 +62,31 @@ export default function NovaAtracaoForm() {
         
     }
 
+    const [dialogOpen, setDialogOpen] = useState(false)
+    const handleDialogOpen = () => {
+        setDialogOpen(true);
+    };
+    const handleDialogClose = () => {
+        setDialogOpen(false);
+        navigate("/")
+    };
+
     return (
         <React.Fragment>
+            <Dialog
+                open={dialogOpen}
+                onClose={handleDialogClose}
+                aria-describedby="alert-dialog-slide-description" >
+                <DialogTitle>{"Sucesso!"}</DialogTitle>
+                <DialogContent>
+                <DialogContentText id="alert-dialog-slide-description">
+                    Atração criada e disponível no sistema.
+                </DialogContentText>
+                </DialogContent>
+                <DialogActions>
+                <Button onClick={handleDialogClose}>Fechar</Button>
+                </DialogActions>
+            </Dialog>
             <h3 className='form-nova-atracao-title'>Cadastro de nova atração</h3>
             <form className='form-nova-atracao' onSubmit={handleSubmit} action={<Link to="/login" />} >
                 <Stack spacing={2} direction="row" sx={{marginBottom: 4}} title="">

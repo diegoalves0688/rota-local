@@ -41,6 +41,27 @@ export default function RecomendacaoLista() {
         navigate("/login")
     };
 
+    const [rateOpen, setRateOpen] = useState(false)
+    const handleRateDialogOpen = () => {
+        setRateOpen(true);
+    };
+    const handleRateDialogClose = () => {
+        setRateOpen(false);
+        window.location.reload(false);
+    };
+
+    const [deleteOpen, setDeleteOpen] = useState(false)
+    const handleDeleteDialogOpen = () => {
+        setDeleteOpen(true);
+    };
+    const handleDeleteDialogClose = () => {
+        setDeleteOpen(false);
+    };
+    const handleDeleteDialogConfirm = () => {
+        setDeleteOpen(false);
+        window.location.reload(false);
+    };
+
     const [recomendacoes, setRecomentacoes] = useState([])
     const navigate = useNavigate();
     const [cookies, setCookie] = useCookies(['user']);
@@ -72,7 +93,7 @@ export default function RecomendacaoLista() {
                 'X-API-KEY': cookies.user,
                 'X-API-TOKEN': cookies.token,
             }}).then((response) => {
-                alert("Avaliação salva com sucesso!")
+                handleRateDialogOpen();
             });
         } else {
             handleLoginDialogOpen()
@@ -85,9 +106,7 @@ export default function RecomendacaoLista() {
                 'X-API-KEY': cookies.user,
                 'X-API-TOKEN': cookies.token,
             }}).then((response) => {
-                console.log(response);
-                alert("Recomendação deletada com sucesso!")
-                navigate("/")
+                handleDeleteDialogOpen();
             });
         } else {
             handleLoginDialogOpen()
@@ -100,7 +119,7 @@ export default function RecomendacaoLista() {
                 open={open}
                 onClose={handleLoginDialogClose}
                 aria-describedby="alert-dialog-slide-description" >
-                <DialogTitle>{"Usuário não logado."}</DialogTitle>
+                <DialogTitle>{"Usuário não logado!"}</DialogTitle>
                 <DialogContent>
                 <DialogContentText id="alert-dialog-slide-description">
                     Deseja ser redirecionado para a página de login?
@@ -109,6 +128,35 @@ export default function RecomendacaoLista() {
                 <DialogActions>
                 <Button onClick={handleLoginDialogClose}>Desistir</Button>
                 <Button onClick={handleDialogConfirm}>Confirmar</Button>
+                </DialogActions>
+            </Dialog>
+            <Dialog
+                open={rateOpen}
+                onClose={handleRateDialogClose}
+                aria-describedby="alert-dialog-slide-description" >
+                <DialogTitle>{"Sucesso!"}</DialogTitle>
+                <DialogContent>
+                <DialogContentText id="alert-dialog-slide-description">
+                    Sua avaliação foi salva e já está disponível
+                </DialogContentText>
+                </DialogContent>
+                <DialogActions>
+                <Button onClick={handleRateDialogClose}>Fechar</Button>
+                </DialogActions>
+            </Dialog>
+            <Dialog
+                open={deleteOpen}
+                onClose={handleDeleteDialogClose}
+                aria-describedby="alert-dialog-slide-description" >
+                <DialogTitle>{"Aviso!"}</DialogTitle>
+                <DialogContent>
+                <DialogContentText id="alert-dialog-slide-description">
+                    Deseja realmente deletar a recomendação?
+                </DialogContentText>
+                </DialogContent>
+                <DialogActions>
+                <Button onClick={handleDeleteDialogClose}>Desistir</Button>
+                <Button onClick={handleDeleteDialogConfirm}>Confirmar</Button>
                 </DialogActions>
             </Dialog>
             <h3 className='recomendacoes-title'>Recomendações</h3>
