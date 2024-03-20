@@ -51,6 +51,24 @@ export default function VisualizarAtracao() {
         navigate("/login")
     };
 
+    const [rateOpen, setRateOpen] = useState(false)
+    const handleRateDialogOpen = () => {
+        setRateOpen(true);
+    };
+    const handleRateDialogClose = () => {
+        setRateOpen(false);
+        window.location.reload(false);
+    };
+
+    const [deleteDialogOpen, setDeleteDialogOpen] = useState(false)
+    const handleDeleteDialogOpen = () => {
+        setDeleteDialogOpen(true);
+    };
+    const handleDeleteDialogClose = () => {
+        setDeleteDialogOpen(false);
+        navigate("/")
+    };
+
     const navigate = useNavigate();
     const [cookies] = useCookies(['user']);
 
@@ -109,9 +127,7 @@ export default function VisualizarAtracao() {
                 'X-API-KEY': cookies.user,
                 'X-API-TOKEN': cookies.token,
             }}).then((response) => {
-                console.log(response);
-                alert("Avaliação salva com sucesso!")
-                window.location.reload(false);
+                handleRateDialogOpen();
             });
         } else {
             handleLoginDialogOpen()
@@ -132,9 +148,7 @@ export default function VisualizarAtracao() {
                 'X-API-KEY': cookies.user,
                 'X-API-TOKEN': cookies.token,
             }}).then((response) => {
-                console.log(response);
-                alert("Atração deletada com sucesso!")
-                navigate("/")
+                handleDeleteDialogOpen()
             });
         } else {
             handleLoginDialogOpen()
@@ -151,7 +165,7 @@ export default function VisualizarAtracao() {
                 open={open}
                 onClose={handleLoginDialogClose}
                 aria-describedby="alert-dialog-slide-description" >
-                <DialogTitle>{"Usuário não logado."}</DialogTitle>
+                <DialogTitle>{"Usuário não logado!"}</DialogTitle>
                 <DialogContent>
                 <DialogContentText id="alert-dialog-slide-description">
                     Deseja ser redirecionado para a página de login?
@@ -160,6 +174,34 @@ export default function VisualizarAtracao() {
                 <DialogActions>
                 <Button onClick={handleLoginDialogClose}>Desistir</Button>
                 <Button onClick={handleDialogConfirm}>Confirmar</Button>
+                </DialogActions>
+            </Dialog>
+            <Dialog
+                open={rateOpen}
+                onClose={handleRateDialogClose}
+                aria-describedby="alert-dialog-slide-description" >
+                <DialogTitle>{"Sucesso!"}</DialogTitle>
+                <DialogContent>
+                <DialogContentText id="alert-dialog-slide-description">
+                    Sua avaliação foi salva e já está disponível
+                </DialogContentText>
+                </DialogContent>
+                <DialogActions>
+                <Button onClick={handleRateDialogClose}>Fechar</Button>
+                </DialogActions>
+            </Dialog>
+            <Dialog
+                open={deleteDialogOpen}
+                onClose={handleDeleteDialogClose}
+                aria-describedby="alert-dialog-slide-description" >
+                <DialogTitle>{"Feito!"}</DialogTitle>
+                <DialogContent>
+                <DialogContentText id="alert-dialog-slide-description">
+                    Sua atração foi deletada com sucesso!
+                </DialogContentText>
+                </DialogContent>
+                <DialogActions>
+                <Button onClick={handleDeleteDialogClose}>Fechar</Button>
                 </DialogActions>
             </Dialog>
             <Stack direction="row" spacing={1}>

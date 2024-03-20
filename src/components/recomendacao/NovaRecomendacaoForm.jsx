@@ -32,6 +32,15 @@ export default function NovaRecomendacaoForm() {
         navigate("/login")
     };
 
+    const [recomendacaoOpen, setRecomendacaoOpen] = useState(false)
+    const handleRecomendacaoDialogOpen = () => {
+        setRecomendacaoOpen(true);
+    };
+    const handleRecomendacaoDialogClose = () => {
+        setRecomendacaoOpen(false);
+        window.location.reload(false);
+    };
+
     function isLogged(){
         return cookies.user != "undefined" && cookies.user != null
     }
@@ -48,9 +57,7 @@ export default function NovaRecomendacaoForm() {
                     'X-API-TOKEN': cookies.token,
                 }
             }).then((response) => {
-                console.log(response);
-                alert("Recomendação criada com sucesso!")
-                window.location.reload(false);
+                handleRecomendacaoDialogOpen();
             });
         } else {
             handleLoginDialogOpen()
@@ -63,7 +70,7 @@ export default function NovaRecomendacaoForm() {
                 open={open}
                 onClose={handleLoginDialogClose}
                 aria-describedby="alert-dialog-slide-description" >
-                <DialogTitle>{"Usuário não logado."}</DialogTitle>
+                <DialogTitle>{"Usuário não logado!"}</DialogTitle>
                 <DialogContent>
                 <DialogContentText id="alert-dialog-slide-description">
                     Deseja ser redirecionado para a página de login?
@@ -72,6 +79,20 @@ export default function NovaRecomendacaoForm() {
                 <DialogActions>
                 <Button onClick={handleLoginDialogClose}>Desistir</Button>
                 <Button onClick={handleDialogConfirm}>Confirmar</Button>
+                </DialogActions>
+            </Dialog>
+            <Dialog
+                open={recomendacaoOpen}
+                onClose={handleRecomendacaoDialogClose}
+                aria-describedby="alert-dialog-slide-description" >
+                <DialogTitle>{"Sucesso!"}</DialogTitle>
+                <DialogContent>
+                <DialogContentText id="alert-dialog-slide-description">
+                    Sua recomendação foi criada!
+                </DialogContentText>
+                </DialogContent>
+                <DialogActions>
+                <Button onClick={handleRecomendacaoDialogClose}>Fechar</Button>
                 </DialogActions>
             </Dialog>
             <form className='form-nova-recomendacao' onSubmit={handleSubmit}>
